@@ -1,4 +1,4 @@
-package Light;
+package Engine.Light;
 
 import java.awt.*;
 

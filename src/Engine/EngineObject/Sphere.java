@@ -1,4 +1,4 @@
-package Object;
+package Engine.EngineObject;
 
 public class Sphere extends SpatialObject {
     public Sphere() {

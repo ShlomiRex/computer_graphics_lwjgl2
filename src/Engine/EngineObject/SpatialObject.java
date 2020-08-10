@@ -1,8 +1,8 @@
-package Object;
+package Engine.EngineObject;
 
 import org.lwjgl.util.vector.Vector3f;
 
-public abstract class SpatialObject extends Object implements ISpatialObject {
+public abstract class SpatialObject extends EngineObject implements ISpatialObject {
     public Vector3f position;
     public Vector3f rotation;
     public Vector3f scale;

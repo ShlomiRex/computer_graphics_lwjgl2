@@ -1,4 +1,4 @@
-package Light;
+package Engine.Light;
 
 import org.lwjgl.util.vector.Vector3f;
 
