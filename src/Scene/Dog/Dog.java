@@ -18,6 +18,7 @@ public class Dog extends SpatialObject {
 
     @Override
     public void render() {
-
+        head.render();
+        body.render();
     }
 }

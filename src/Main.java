@@ -1,4 +1,5 @@
 import GUI.GUIWindow;
+import Scene.Dog.Dog;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.LWJGLUtil;
@@ -17,10 +18,12 @@ public class Main {
 
     private GUIWindow guiWindow;
     private GameWindow gameWindow;
+    private Dog dog;
 
     public Main() {
         guiWindow = new GUIWindow("Controls");
         gameWindow = new GameWindow("My Game", 1600, 900);
+        dog = new Dog();
     }
 
     private void run() throws LWJGLException {
@@ -82,6 +85,7 @@ public class Main {
 
     //Exit gracefully.
     private void exit() {
+        System.out.println("Exiting...");
         guiWindow.exit();
         System.exit(0);
     }
@@ -94,6 +98,10 @@ public class Main {
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+            glPushMatrix();
+            dog.render();
+            glPopMatrix();
+
             Display.update();
             if (startTime > System.currentTimeMillis()) {
                 fps++;
@@ -105,8 +113,6 @@ public class Main {
                 fps = 0;
             }
         }
-
-        System.out.println("Exiting...");
     }
 
     public static void main(String[] args) {
