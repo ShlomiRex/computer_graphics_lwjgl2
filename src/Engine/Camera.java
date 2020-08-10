@@ -14,7 +14,7 @@ public class Camera extends SpatialObject  {
 
     public Camera() {
         position = new Vector3f(0, 0, 0);
-        direction = new Vector3f(0, -1, 0);
+        direction = new Vector3f(0, 0, -1);
         up = new Vector3f(0, 1, 0);
 
         move_speed = 0.5f;

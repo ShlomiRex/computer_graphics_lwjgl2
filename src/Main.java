@@ -7,6 +7,7 @@ import org.lwjgl.LWJGLUtil;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GLContext;
+import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.nio.FloatBuffer;
@@ -41,26 +42,9 @@ public class Main {
         gameWindow.init();
         initKeyboard(gameWindow);
 
-        // setup ogl
-        FloatBuffer pos = BufferUtils.createFloatBuffer(4).put(new float[] { 5.0f, 5.0f, 10.0f, 0.0f});
-        FloatBuffer red = BufferUtils.createFloatBuffer(4).put(new float[] { 0.8f, 0.1f, 0.0f, 1.0f});
-        FloatBuffer green = BufferUtils.createFloatBuffer(4).put(new float[] { 0.0f, 0.8f, 0.2f, 1.0f});
-        FloatBuffer blue = BufferUtils.createFloatBuffer(4).put(new float[] { 0.2f, 0.2f, 1.0f, 1.0f});
-
-        pos.flip();
-        red.flip();
-        green.flip();
-        blue.flip();
-
-        glLight(GL_LIGHT0, GL_POSITION, pos);
-        glEnable(GL_CULL_FACE);
-        glEnable(GL_LIGHTING);
-        glEnable(GL_LIGHT0);
-        glEnable(GL_DEPTH_TEST);
-
-        glEnable(GL_NORMALIZE);
-
+        /*
         glMatrixMode(GL_PROJECTION);
+
 
         System.err.println("LWJGL: " + Sys.getVersion() + " / " + LWJGLUtil.getPlatformName());
         System.err.println("GL_VENDOR: " + glGetString(GL_VENDOR));
@@ -79,13 +63,12 @@ public class Main {
             identityTranspose.flip();
             glLoadTransposeMatrixARB(identityTranspose);
         }
+        */
 
-        float h = (float) 300 / (float) 300;
-        glFrustum(-1.0f, 1.0f, -h, h, 5.0f, 60.0f);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glTranslatef(0.0f, 0.0f, -40.0f);
+        //float h = (float) 300 / (float) 300;
+        //glFrustum(-1.0f, 1.0f, -h, h, 5.0f, 60.0f);
     }
+
 
     private void initKeyboard(GameWindow window) {
 
@@ -128,12 +111,25 @@ public class Main {
         long fps = 0;
 
         while (!Display.isCloseRequested()) {
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear background color, Clear depth buffer
+            glColor3f(0f, 0f, 0f); //Background color
 
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glMatrixMode(GL_MODELVIEW);//Convert model matrix to view matrix (lookat next lines)
+            glLoadIdentity(); // Reset the model-view matrix (view matrix multiplied by model = model is viewed)
 
-            glPushMatrix();
-            dog.render();
-            glPopMatrix();
+            //direction vector default is 0,0,-1 and up vector default is 0,1,0
+            GLU.gluLookAt(
+                    camera.position.x, camera.position.y, camera.position.z,
+                    camera.direction.x, camera.direction.y, camera.direction.z,
+                    camera.up.x, camera.up.y, camera.up.z
+            );
+
+
+            render();
+
+            //Read keyboard
+            Keyboard.pollKeys();
+
 
             Display.update();
             if (startTime > System.currentTimeMillis()) {
@@ -145,7 +141,18 @@ public class Main {
                         + (fps / (timeUsed / 1000f)));
                 fps = 0;
             }
+
+            glFlush();
         }
+    }
+
+    //Called each frame.
+    private void render() {
+        glTranslatef(0, 0, -40f);
+
+
+        dog.render();
+
     }
 
     public static void main(String[] args) {

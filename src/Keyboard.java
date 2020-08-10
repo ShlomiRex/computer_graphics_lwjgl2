@@ -24,6 +24,49 @@ public class Keyboard {
         Keyboard.move_down = move_down;
     }
 
+    public static void pollKeys() {
+        //check keys, buffered
+        org.lwjgl.input.Keyboard.poll();
+
+        //Do not remove this. This can be useful in the future.
+        /*
+        int count = org.lwjgl.input.Keyboard.getNumKeyboardEvents();
+        while (org.lwjgl.input.Keyboard.next()) {
+            int character_code = ((int) org.lwjgl.input.Keyboard.getEventCharacter()) & 0xffff;
+            System.out.println("Checking key:" + org.lwjgl.input.Keyboard.getKeyName(org.lwjgl.input.Keyboard.getEventKey()));
+            System.out.println("Pressed:" + org.lwjgl.input.Keyboard.getEventKeyState());
+            System.out.println("Key character code: 0x" + Integer.toHexString(character_code));
+            System.out.println("Key character: " + org.lwjgl.input.Keyboard.getEventCharacter());
+            System.out.println("Repeat event: " + org.lwjgl.input.Keyboard.isRepeatEvent());
+
+            if (org.lwjgl.input.Keyboard.getEventKey() == org.lwjgl.input.Keyboard.KEY_R && org.lwjgl.input.Keyboard.getEventKeyState()) {
+                org.lwjgl.input.Keyboard.enableRepeatEvents(!org.lwjgl.input.Keyboard.areRepeatEventsEnabled());
+            }
+            if (org.lwjgl.input.Keyboard.getEventKey() == org.lwjgl.input.Keyboard.KEY_ESCAPE) {
+                return;
+            }
+        }
+         */
+
+        if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_W)) {
+            move_forward.run();
+        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_S)) {
+            move_backward.run();
+        }
+
+        if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_A)) {
+            move_left.run();
+        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_D)) {
+            move_right.run();
+        }
+
+        if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_Z)) {
+            move_up.run();
+        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_X)) {
+            move_down.run();
+        }
+    }
+
     /*
     public void input() {
         if (window.isKeyPressed(GLFW_KEY_W)) {
