@@ -248,4 +248,9 @@ public class GUIWindow {
         window.pack();
         window.setVisible(true);
     }
+
+    public void exit() {
+        //nothing to do
+        System.out.println("GUI is closing...");
+    }
 }
