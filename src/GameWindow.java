@@ -3,6 +3,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 public class GameWindow {
+
     public int width, height;
     public String title;
 

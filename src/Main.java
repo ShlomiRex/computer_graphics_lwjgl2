@@ -1,3 +1,4 @@
+import Engine.Camera;
 import GUI.GUIWindow;
 import Scene.Dog.Dog;
 import org.lwjgl.BufferUtils;
@@ -5,8 +6,8 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.LWJGLUtil;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GLContext;
+import org.lwjgl.util.vector.Vector3f;
 
 import java.nio.FloatBuffer;
 
@@ -19,11 +20,13 @@ public class Main {
     private GUIWindow guiWindow;
     private GameWindow gameWindow;
     private Dog dog;
+    private Camera camera;
 
     public Main() {
         guiWindow = new GUIWindow("Controls");
         gameWindow = new GameWindow("My Game", 1600, 900);
         dog = new Dog();
+        camera = new Camera();
     }
 
     private void run() throws LWJGLException {
@@ -36,6 +39,7 @@ public class Main {
 
     private void init() throws LWJGLException {
         gameWindow.init();
+        initKeyboard(gameWindow);
 
         // setup ogl
         FloatBuffer pos = BufferUtils.createFloatBuffer(4).put(new float[] { 5.0f, 5.0f, 10.0f, 0.0f});
@@ -81,6 +85,35 @@ public class Main {
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         glTranslatef(0.0f, 0.0f, -40.0f);
+    }
+
+    private void initKeyboard(GameWindow window) {
+
+        Runnable move_forward = () -> {
+            camera.moveForward();
+        };
+
+        Runnable move_backward = () -> {
+
+        };
+
+        Runnable move_left = () -> {
+
+        };
+
+        Runnable  move_right = () -> {
+
+        };
+
+        Runnable move_up = () -> {
+
+        };
+
+        Runnable move_down = () -> {
+
+        };
+
+        Keyboard.init(window, move_forward, move_backward, move_left, move_right, move_up, move_down);
     }
 
     //Exit gracefully.

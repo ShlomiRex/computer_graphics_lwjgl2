@@ -1,24 +1,27 @@
-package Engine;
-
-
-
 public class Keyboard {
-    public Runnable move_forward, move_backward, move_left, move_right, move_up, move_down;
+
+    private static final Keyboard instance = new Keyboard();
+
+    public static Runnable move_forward, move_backward, move_left, move_right, move_up, move_down;
 
     public static Runnable dog_head_rotate_clockwise, dog_head_rotate_cclockwise;
     public static Runnable key_h, key_j; //not sure what these do but ok
     public static Runnable key_n, key_m; //These move the spotlight
 
-    private Window window;
+    private static GameWindow window;
 
-    public Keyboard(Window window, Runnable move_forward, Runnable move_backward, Runnable move_left, Runnable move_right, Runnable move_up, Runnable move_down) {
-        this.window = window;
-        this.move_forward = move_forward;
-        this.move_backward = move_backward;
-        this.move_left = move_left;
-        this.move_right = move_right;
-        this.move_up = move_up;
-        this.move_down = move_down;
+    private Keyboard() {
+
+    }
+
+    public static void init(GameWindow window, Runnable move_forward, Runnable move_backward, Runnable move_left, Runnable move_right, Runnable move_up, Runnable move_down) {
+        Keyboard.window = window;
+        Keyboard.move_forward = move_forward;
+        Keyboard.move_backward = move_backward;
+        Keyboard.move_left = move_left;
+        Keyboard.move_right = move_right;
+        Keyboard.move_up = move_up;
+        Keyboard.move_down = move_down;
     }
 
     /*
