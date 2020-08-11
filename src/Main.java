@@ -85,9 +85,6 @@ public class Main {
 
     //Main game loop (Render, Input, Update)
     private void gameLoop() {
-        long startTime = System.currentTimeMillis() + 5000;
-        long fps = 0;
-
         while (!Display.isCloseRequested()) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear background color, Clear depth buffer
             glColor3f(0f, 0f, 0f); //Background color
@@ -119,10 +116,7 @@ public class Main {
         //To bring everything in front of camera.
         glTranslatef(0, 0, -20f);
 
-
         dog.render();
-        glColor3f(1, 1, 1);
-        glTranslatef(0, 5, 0);
         house.render();
     }
 

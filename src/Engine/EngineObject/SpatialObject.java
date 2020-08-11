@@ -16,15 +16,16 @@ public abstract class SpatialObject extends EngineObject implements ISpatialObje
 
     @Override
     public void render() {
-        for(EngineObject object : children) {
-            if(object instanceof SpatialObject) {
-                GL11.glPushMatrix();
-                    //Apply transformation of parent.
-                    GL11.glScalef(scale.x, scale.y, scale.z);
-                    GL11.glTranslatef(position.x, position.y, position.z);
-                    ((SpatialObject) object).render();
-                GL11.glPopMatrix();
+        GL11.glPushMatrix();
+            //Apply transformation of parent.
+            GL11.glTranslatef(position.x, position.y, position.z);
+            GL11.glScalef(scale.x, scale.y, scale.z);
+
+            for(EngineObject object : children) {
+                if(object instanceof SpatialObject) {
+                    ((SpatialObject)object).render();
+                }
             }
-        }
+        GL11.glPopMatrix();
     }
 }
