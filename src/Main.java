@@ -20,7 +20,7 @@ public class Main {
 
     public Main() {
         guiWindow = new GUIWindow("Controls");
-        gameWindow = new GameWindow("My Game", 800, 600);
+        gameWindow = new GameWindow("My Game", 1280, 720);
         camera = new Camera();
 
         dog = new Dog();

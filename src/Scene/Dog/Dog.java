@@ -19,7 +19,7 @@ public class Dog extends SpatialObject {
         children.add(head);
         children.add(body);
 
-        position.y = 5f;
+        position.y = 10f;
 
         //Move head to correct position relative to Dog SpatialObject.
         head.position.x = 0f;
