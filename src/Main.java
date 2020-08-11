@@ -33,32 +33,6 @@ public class Main {
         gameWindow.init();
         initKeyboard(gameWindow);
         initMouse();
-
-        /*
-        glMatrixMode(GL_PROJECTION);
-
-
-        System.err.println("LWJGL: " + Sys.getVersion() + " / " + LWJGLUtil.getPlatformName());
-        System.err.println("GL_VENDOR: " + glGetString(GL_VENDOR));
-        System.err.println("GL_RENDERER: " + glGetString(GL_RENDERER));
-        System.err.println("GL_VERSION: " + glGetString(GL_VERSION));
-        System.err.println();
-        System.err.println("glLoadTransposeMatrixfARB() supported: " + GLContext.getCapabilities().GL_ARB_transpose_matrix);
-        if (!GLContext.getCapabilities().GL_ARB_transpose_matrix) {
-            // --- not using extensions
-            glLoadIdentity();
-        } else {
-            // --- using extensions
-            final FloatBuffer identityTranspose = BufferUtils.createFloatBuffer(16).put(
-                    new float[] { 1, 0, 0, 0, 0, 1, 0, 0,
-                            0, 0, 1, 0, 0, 0, 0, 1});
-            identityTranspose.flip();
-            glLoadTransposeMatrixARB(identityTranspose);
-        }
-        */
-
-        //float h = (float) 300 / (float) 300;
-        //glFrustum(-1.0f, 1.0f, -h, h, 5.0f, 60.0f);
     }
 
     private void initMouse() {
