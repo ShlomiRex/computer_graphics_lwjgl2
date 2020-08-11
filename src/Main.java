@@ -114,7 +114,8 @@ public class Main {
     //Called each frame.
     private void render() {
         //To bring everything in front of camera.
-        glTranslatef(0, 0, -20f);
+        //Also bring camera up so we can see below us.
+        glTranslatef(0, -5f, -20f);
 
         dog.render();
         house.render();

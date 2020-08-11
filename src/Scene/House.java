@@ -5,14 +5,42 @@ import Engine.EngineObject.SpatialObject;
 
 public class House extends SpatialObject {
 
-    private Cube floor;
+    private final float WALL_THICKNESS = 0.1f;
+    private final float WALL_LENGTH = 30f;
+    private final float CEILING_HEIGHT = WALL_LENGTH / 2f;
+
+    private Cube floor, backWall, leftWall, rightWall;
 
     public House() {
         floor = new Cube();
-        floor.scale.x = 10f;
-        floor.scale.y = 0.1f;
-        floor.scale.z = 10f;
+        floor.scale.x = WALL_LENGTH;
+        floor.scale.y = WALL_THICKNESS;
+        floor.scale.z = WALL_LENGTH;
+
+        backWall = new Cube();
+        backWall.scale.x = WALL_LENGTH;
+        backWall.scale.y = CEILING_HEIGHT;
+        backWall.scale.z = WALL_THICKNESS;
+        backWall.position.z -= WALL_LENGTH;
+        backWall.position.y += CEILING_HEIGHT;
+
+        leftWall = new Cube();
+        leftWall.scale.x = WALL_THICKNESS;
+        leftWall.scale.y = CEILING_HEIGHT;
+        leftWall.scale.z = WALL_LENGTH;
+        leftWall.position.x -= WALL_LENGTH;
+        leftWall.position.y += CEILING_HEIGHT;
+
+        rightWall = new Cube();
+        rightWall.scale.x = WALL_THICKNESS;
+        rightWall.scale.y = CEILING_HEIGHT;
+        rightWall.scale.z = WALL_LENGTH;
+        rightWall.position.x += WALL_LENGTH;
+        rightWall.position.y += CEILING_HEIGHT;
 
         children.add(floor);
+        children.add(backWall);
+        children.add(leftWall);
+        children.add(rightWall);
     }
 }
