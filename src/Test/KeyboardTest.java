@@ -42,7 +42,7 @@ import static org.lwjgl.util.glu.GLU.*;
 
 /**
  * <br>
- * Keyboard test
+ * Engine.Input.Keyboard test
  *
  * @author Brian Matzon <brian@matzon.dk>
  * @version $Revision$

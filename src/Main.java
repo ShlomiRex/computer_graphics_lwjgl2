@@ -1,6 +1,9 @@
 import Engine.Camera;
+import Engine.Input.Keyboard;
+import Engine.Input.Mouse;
 import GUI.GUIWindow;
 import Scene.Dog.Dog;
+import Scene.House;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.glu.GLU;
@@ -12,13 +15,16 @@ public class Main {
     private GUIWindow guiWindow;
     private GameWindow gameWindow;
     private Dog dog;
+    private House house;
     private Camera camera;
 
     public Main() {
         guiWindow = new GUIWindow("Controls");
         gameWindow = new GameWindow("My Game", 800, 600);
-        dog = new Dog();
         camera = new Camera();
+
+        dog = new Dog();
+        house = new House();
     }
 
     private void run() throws LWJGLException {
@@ -66,7 +72,7 @@ public class Main {
             camera.moveDown();
         };
 
-        Keyboard.init(window, move_forward, move_backward, move_left, move_right, move_up, move_down);
+        Keyboard.init(move_forward, move_backward, move_left, move_right, move_up, move_down);
     }
 
     //Exit gracefully.
@@ -77,6 +83,7 @@ public class Main {
         System.exit(0);
     }
 
+    //Main game loop (Render, Input, Update)
     private void gameLoop() {
         long startTime = System.currentTimeMillis() + 5000;
         long fps = 0;
@@ -95,28 +102,14 @@ public class Main {
                     camera.up.x, camera.up.y, camera.up.z
             );
 
-
-            render();
-
             //Read keyboard
             Keyboard.pollKeys();
 
             //Read mouse
             Mouse.poll();
 
-
-
+            render();
             Display.update();
-            if (startTime > System.currentTimeMillis()) {
-                fps++;
-            } else {
-                long timeUsed = 5000 + (startTime - System.currentTimeMillis());
-                startTime = System.currentTimeMillis() + 5000;
-                System.out.println(fps + " frames in " + timeUsed / 1000f + " seconds = "
-                        + (fps / (timeUsed / 1000f)));
-                fps = 0;
-            }
-
             glFlush();
         }
     }
@@ -127,7 +120,9 @@ public class Main {
 
 
         dog.render();
-
+        glColor3f(1, 1, 1);
+        glTranslatef(0, 5, 0);
+        house.render();
     }
 
     public static void main(String[] args) {

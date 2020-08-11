@@ -1,3 +1,5 @@
+package Engine.Input;
+
 public class Keyboard {
 
     private static final Keyboard instance = new Keyboard();
@@ -8,14 +10,11 @@ public class Keyboard {
     public static Runnable key_h, key_j; //not sure what these do but ok
     public static Runnable key_n, key_m; //These move the spotlight
 
-    private static GameWindow window;
-
     private Keyboard() {
 
     }
 
-    public static void init(GameWindow window, Runnable move_forward, Runnable move_backward, Runnable move_left, Runnable move_right, Runnable move_up, Runnable move_down) {
-        Keyboard.window = window;
+    public static void init(Runnable move_forward, Runnable move_backward, Runnable move_left, Runnable move_right, Runnable move_up, Runnable move_down) {
         Keyboard.move_forward = move_forward;
         Keyboard.move_backward = move_backward;
         Keyboard.move_left = move_left;
@@ -30,19 +29,19 @@ public class Keyboard {
 
         //Do not remove this. This can be useful in the future.
         /*
-        int count = org.lwjgl.input.Keyboard.getNumKeyboardEvents();
-        while (org.lwjgl.input.Keyboard.next()) {
-            int character_code = ((int) org.lwjgl.input.Keyboard.getEventCharacter()) & 0xffff;
-            System.out.println("Checking key:" + org.lwjgl.input.Keyboard.getKeyName(org.lwjgl.input.Keyboard.getEventKey()));
-            System.out.println("Pressed:" + org.lwjgl.input.Keyboard.getEventKeyState());
+        int count = org.lwjgl.input.Engine.Input.Keyboard.getNumKeyboardEvents();
+        while (org.lwjgl.input.Engine.Input.Keyboard.next()) {
+            int character_code = ((int) org.lwjgl.input.Engine.Input.Keyboard.getEventCharacter()) & 0xffff;
+            System.out.println("Checking key:" + org.lwjgl.input.Engine.Input.Keyboard.getKeyName(org.lwjgl.input.Engine.Input.Keyboard.getEventKey()));
+            System.out.println("Pressed:" + org.lwjgl.input.Engine.Input.Keyboard.getEventKeyState());
             System.out.println("Key character code: 0x" + Integer.toHexString(character_code));
-            System.out.println("Key character: " + org.lwjgl.input.Keyboard.getEventCharacter());
-            System.out.println("Repeat event: " + org.lwjgl.input.Keyboard.isRepeatEvent());
+            System.out.println("Key character: " + org.lwjgl.input.Engine.Input.Keyboard.getEventCharacter());
+            System.out.println("Repeat event: " + org.lwjgl.input.Engine.Input.Keyboard.isRepeatEvent());
 
-            if (org.lwjgl.input.Keyboard.getEventKey() == org.lwjgl.input.Keyboard.KEY_R && org.lwjgl.input.Keyboard.getEventKeyState()) {
-                org.lwjgl.input.Keyboard.enableRepeatEvents(!org.lwjgl.input.Keyboard.areRepeatEventsEnabled());
+            if (org.lwjgl.input.Engine.Input.Keyboard.getEventKey() == org.lwjgl.input.Engine.Input.Keyboard.KEY_R && org.lwjgl.input.Engine.Input.Keyboard.getEventKeyState()) {
+                org.lwjgl.input.Engine.Input.Keyboard.enableRepeatEvents(!org.lwjgl.input.Engine.Input.Keyboard.areRepeatEventsEnabled());
             }
-            if (org.lwjgl.input.Keyboard.getEventKey() == org.lwjgl.input.Keyboard.KEY_ESCAPE) {
+            if (org.lwjgl.input.Engine.Input.Keyboard.getEventKey() == org.lwjgl.input.Engine.Input.Keyboard.KEY_ESCAPE) {
                 return;
             }
         }

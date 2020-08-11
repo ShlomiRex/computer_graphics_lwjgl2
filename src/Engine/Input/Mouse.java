@@ -1,3 +1,5 @@
+package Engine.Input;
+
 import Engine.Camera;
 
 public class Mouse {

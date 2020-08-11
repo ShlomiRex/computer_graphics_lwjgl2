@@ -43,7 +43,7 @@ import static org.lwjgl.util.glu.GLU.*;
 
 /**
  * <br>
- * Mouse test
+ * Engine.Input.Mouse test
  *
  * @author Brian Matzon <brian@matzon.dk>
  * @version $Revision$

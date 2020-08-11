@@ -3,7 +3,7 @@ package Scene.Dog;
 import Engine.EngineObject.SpatialObject;
 import org.lwjgl.util.glu.Sphere;
 
-public class Body extends SpatialObject {
+public class Body extends Engine.EngineObject.Sphere {
 
     private Sphere body;
 

@@ -1,15 +1,11 @@
 package Scene.Dog;
 
 import Engine.EngineObject.SpatialObject;
+import Engine.EngineObject.Sphere;
 
-public class Head extends SpatialObject {
+public class Head extends Sphere {
 
     public Head() {
-
-    }
-
-    @Override
-    public void render() {
-
+        this.position.y += 3;
     }
 }
