@@ -67,6 +67,8 @@ public class SpatialLight extends Light implements ISpatialObject {
         renderObject.position.y = position.y;
         renderObject.position.z = position.z;
 
+        glColor3f(0.5f, 0.5f, 0f);
         renderObject.render();
+        glColor3f(0.5f, 0.5f, 0.5f);
     }
 }
