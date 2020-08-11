@@ -1,31 +1,57 @@
 package Engine.EngineObject;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector3f;
 
-public abstract class SpatialObject extends EngineObject implements ISpatialObject {
-    public Vector3f position;
-    public Vector3f rotation;
-    public Vector3f scale;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glNormal3f;
 
-    public SpatialObject() {
-        position = new Vector3f();
-        rotation = new Vector3f();
-        scale = new Vector3f(1, 1, 1);
-    }
+public abstract class SpatialObject extends BaseSpatialObject implements ISpatialObject {
 
     @Override
     public void render() {
         GL11.glPushMatrix();
-            //Apply transformation of parent.
-            GL11.glScalef(scale.x, scale.y, scale.z);
-            GL11.glTranslatef(position.x, position.y, position.z);
+        //Apply transformation of parent.
+        glDisable(GL_LIGHTING);
+        glDisable(GL_TEXTURE_2D);
+        glClearColor(this.getColor().x, this.getColor().y, this.getColor().z, this.getColor().w);
 
-            for(EngineObject object : children) {
-                if(object instanceof SpatialObject) {
-                    ((SpatialObject)object).render();
-                }
+        switch (this.getRenderingOrder()) {
+            case ROTATION_TRANSLATION_SCALING:
+                GL11.glRotatef(rotation.x, 1, 0, 0);
+                GL11.glRotatef(rotation.y, 0, 1, 0);
+                GL11.glRotatef(rotation.z, 0, 0, 1);
+                GL11.glTranslatef(position.x, position.y, position.z);
+                GL11.glScalef(scale.x, scale.y, scale.z);
+                break;
+            case TRANSLATION_ROTATION_SCALING:
+                GL11.glTranslatef(position.x, position.y, position.z);
+                GL11.glRotatef(rotation.x, 1, 0, 0);
+                GL11.glRotatef(rotation.y, 0, 1, 0);
+                GL11.glRotatef(rotation.z, 0, 0, 1);
+                GL11.glScalef(scale.x, scale.y, scale.z);
+                break;
+            default:
+                break;
+        }
+
+        for (BaseObject object : children) {
+            if (object instanceof RawSpatialObject) {
+                ((RawSpatialObject) object).render();
+            } else if (object instanceof SpatialObject) {
+                ((SpatialObject) object).render();
             }
+        }
+        glClearColor(1, 1, 1, 1);
+
+        glEnable(GL_LIGHTING);
+        glEnable(GL_TEXTURE_2D);
         GL11.glPopMatrix();
     }
 }
