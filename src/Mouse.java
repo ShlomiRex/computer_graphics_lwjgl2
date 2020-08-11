@@ -13,7 +13,7 @@ public class Mouse {
 
     private static Camera camera;
 
-    private static final float ROTATE_AMOUNT = 1f; //Degrees to turn each update if mouse is dragged
+    private static final float ROTATE_AMOUNT = 0.2f; //Degrees to turn each update if mouse is dragged (multiplied by delta mouse)
 
     private Mouse() {
     }
@@ -31,10 +31,7 @@ public class Mouse {
         int dw = org.lwjgl.input.Mouse.getDWheel();
 
         if(org.lwjgl.input.Mouse.isButtonDown(0)) {
-            if(dx > 0)
-                camera.rotate_around_y(ROTATE_AMOUNT);
-            else if(dx < 0)
-                camera.rotate_around_y(-ROTATE_AMOUNT);
+            camera.rotate_around_y(ROTATE_AMOUNT * dx);
         }
     }
 }

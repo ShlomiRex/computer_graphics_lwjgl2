@@ -29,6 +29,8 @@ public class Camera extends SpatialObject  {
     }
 
     public void rotate_around_y(float angle) {
+        if(angle == 0)
+            return;
         xz_angle += angle;
         /*
         //Make angle between 0 and 360
