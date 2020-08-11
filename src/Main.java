@@ -1,20 +1,11 @@
 import Engine.Camera;
 import GUI.GUIWindow;
 import Scene.Dog.Dog;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
-import org.lwjgl.LWJGLUtil;
-import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
-import org.lwjgl.util.vector.Vector3f;
 
-import java.nio.FloatBuffer;
-
-import static org.lwjgl.opengl.ARBTransposeMatrix.glLoadTransposeMatrixARB;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
 
 public class Main {
 
@@ -41,6 +32,7 @@ public class Main {
     private void init() throws LWJGLException {
         gameWindow.init();
         initKeyboard(gameWindow);
+        initMouse();
 
         /*
         glMatrixMode(GL_PROJECTION);
@@ -67,6 +59,10 @@ public class Main {
 
         //float h = (float) 300 / (float) 300;
         //glFrustum(-1.0f, 1.0f, -h, h, 5.0f, 60.0f);
+    }
+
+    private void initMouse() {
+        Mouse.init(camera);
     }
 
 
@@ -103,6 +99,7 @@ public class Main {
     private void exit() {
         System.out.println("Exiting...");
         guiWindow.exit();
+        Display.destroy();
         System.exit(0);
     }
 
@@ -129,6 +126,10 @@ public class Main {
 
             //Read keyboard
             Keyboard.pollKeys();
+
+            //Read mouse
+            Mouse.poll();
+
 
 
             Display.update();

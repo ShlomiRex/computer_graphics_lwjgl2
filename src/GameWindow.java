@@ -13,6 +13,10 @@ public class GameWindow {
     public int width, height;
     public String title;
 
+    private final float fovy = 60f; //Perspective fovy in degrees
+    private final float zNear = 0.1f; //Near plane
+    private final float zFar = 1000.0f; //Far plane
+
     public GameWindow(String title, int width, int height) {
         this.width = width;
         this.height = height;
@@ -40,7 +44,7 @@ public class GameWindow {
         glMatrixMode(GL_PROJECTION);  // To operate on the Projection matrix
         glLoadIdentity();             // Reset
         // Enable perspective projection with fovy, aspect, zNear and zFar
-        GLU.gluPerspective(60f, (float) width / (float) height, 0.1f, 100.0f);
+        GLU.gluPerspective(fovy, (float) width / (float) height, zNear, zFar);
 
         initLight0();
     }

@@ -66,42 +66,4 @@ public class Keyboard {
             move_up.run();
         }
     }
-
-    /*
-    public void input() {
-        if (window.isKeyPressed(GLFW_KEY_W)) {
-            move_forward.run();
-        } else if (window.isKeyPressed(GLFW_KEY_S)) {
-            move_backward.run();
-        }
-        if (window.isKeyPressed(GLFW_KEY_A)) {
-            move_left.run();
-        } else if (window.isKeyPressed(GLFW_KEY_D)) {
-            move_right.run();
-        }
-        if (window.isKeyPressed(GLFW_KEY_Z)) {
-            move_up.run();
-        } else if (window.isKeyPressed(GLFW_KEY_X)) {
-            move_down.run();
-        }
-
-        if (window.isKeyPressed(GLFW_KEY_T)) {
-            dog_head_rotate_clockwise.run();
-        } else if (window.isKeyPressed(GLFW_KEY_Y)) {
-            dog_head_rotate_cclockwise.run();
-        }
-
-        if (window.isKeyPressed(GLFW_KEY_H)) {
-            key_h.run();
-        } else if (window.isKeyPressed(GLFW_KEY_J)) {
-            key_j.run();
-        }
-
-        if (window.isKeyPressed(GLFW_KEY_N)) {
-            key_n.run();
-        } else if (window.isKeyPressed(GLFW_KEY_M)) {
-            key_m.run();
-        }
-    }
-     */
 }
