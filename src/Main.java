@@ -77,23 +77,23 @@ public class Main {
         };
 
         Runnable move_backward = () -> {
-
+            camera.moveBackward();
         };
 
         Runnable move_left = () -> {
-
+            camera.moveLeft();
         };
 
         Runnable  move_right = () -> {
-
+            camera.moveRight();
         };
 
         Runnable move_up = () -> {
-
+            camera.moveUp();
         };
 
         Runnable move_down = () -> {
-
+            camera.moveDown();
         };
 
         Keyboard.init(window, move_forward, move_backward, move_left, move_right, move_up, move_down);

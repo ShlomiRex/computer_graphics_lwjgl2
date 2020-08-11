@@ -61,9 +61,9 @@ public class Keyboard {
         }
 
         if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_Z)) {
-            move_up.run();
-        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_X)) {
             move_down.run();
+        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_X)) {
+            move_up.run();
         }
     }
 

@@ -17,7 +17,7 @@ public class Camera extends SpatialObject  {
         direction = new Vector3f(0, 0, -1);
         up = new Vector3f(0, 1, 0);
 
-        move_speed = 0.5f;
+        move_speed = 0.01f;
         xz_angle = 0;
         y_angle = 0;
     }
@@ -67,7 +67,7 @@ public class Camera extends SpatialObject  {
         //TODO: Impliment or no impliment? That is the question.
     }
 
-    public void moveForward() {
+    private Vector3f getNormalizedForwardVector() {
         Vector3f forward = new Vector3f();
         forward.x = direction.x - position.x;
         forward.y = direction.y - position.y;
@@ -75,6 +75,12 @@ public class Camera extends SpatialObject  {
 
         Vector3f normalised_forward = new Vector3f();
         forward.normalise(normalised_forward);
+
+        return normalised_forward;
+    }
+
+    public void moveForward() {
+        Vector3f normalised_forward = getNormalizedForwardVector();
 
         //Move forward
         position.x += normalised_forward.x * move_speed;
@@ -84,5 +90,56 @@ public class Camera extends SpatialObject  {
         direction.x += normalised_forward.x * move_speed;
         direction.y += normalised_forward.y * move_speed;
         direction.z += normalised_forward.z * move_speed;
+    }
+
+    public void moveBackward() {
+        Vector3f normalised_forward = getNormalizedForwardVector();
+
+        position.x -= normalised_forward.x * move_speed;
+        position.y -= normalised_forward.y * move_speed;
+        position.z -= normalised_forward.z * move_speed;
+
+        direction.x += normalised_forward.x * move_speed;
+        direction.y += normalised_forward.y * move_speed;
+        direction.z += normalised_forward.z * move_speed;
+    }
+
+    public void moveLeft() {
+        Vector3f normalised_forward = getNormalizedForwardVector();
+        Vector3f left = new Vector3f();
+        Vector3f.cross(up, normalised_forward, left);
+
+        position.x += left.x * move_speed;
+        position.y += left.y * move_speed;
+        position.z += left.z * move_speed;
+
+        direction.x += left.x * move_speed;
+        direction.y += left.y * move_speed;
+        direction.z += left.z * move_speed;
+    }
+
+    public void moveRight() {
+        Vector3f normalised_forward = getNormalizedForwardVector();
+        Vector3f right = new Vector3f();
+        Vector3f.cross(normalised_forward, up, right);
+
+        position.x += right.x * move_speed;
+        position.y += right.y * move_speed;
+        position.z += right.z * move_speed;
+
+        direction.x += right.x * move_speed;
+        direction.y += right.y * move_speed;
+        direction.z += right.z * move_speed;
+
+    }
+
+    public void moveUp() {
+        position.y += move_speed;
+        direction.y += move_speed;
+    }
+
+    public void moveDown() {
+        position.y -= move_speed;
+        direction.y -= move_speed;
     }
 }
