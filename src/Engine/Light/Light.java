@@ -19,6 +19,6 @@ public class Light {
     public Light(int light_number) {
         LIGHT_X = light_number;
         color = Color.WHITE;
-        intensity = 1.0f;
+        intensity = 0.5f;
     }
 }

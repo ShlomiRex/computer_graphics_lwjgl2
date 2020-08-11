@@ -7,8 +7,8 @@ public class Keyboard {
     public static Runnable move_forward, move_backward, move_left, move_right, move_up, move_down;
 
     public static Runnable dog_head_rotate_clockwise, dog_head_rotate_cclockwise;
-    public static Runnable key_h, key_j; //not sure what these do but ok
-    public static Runnable key_n, key_m; //These move the spotlight
+    public static Runnable key_h, key_j;
+    public static Runnable key_n, key_m;
 
     private Keyboard() {
 
@@ -63,6 +63,18 @@ public class Keyboard {
             move_down.run();
         } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_X)) {
             move_up.run();
+        }
+
+        if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_N)) {
+            key_n.run();
+        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_M)) {
+            key_m.run();
+        }
+
+        if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_H)) {
+            key_h.run();
+        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_J)) {
+            key_j.run();
         }
     }
 }

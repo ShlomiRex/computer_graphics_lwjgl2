@@ -36,14 +36,7 @@ public class GameWindow {
         Display.setTitle(title);
         Display.create();
 
-        initGUIEvents();
         initOpenGL();
-    }
-
-    private void initGUIEvents() {
-        GUIWindow.runnable_ambientLight_color = () -> {
-
-        };
     }
 
     private void initOpenGL() {

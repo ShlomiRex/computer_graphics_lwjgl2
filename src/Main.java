@@ -87,6 +87,22 @@ public class Main {
         };
 
         Keyboard.init(move_forward, move_backward, move_left, move_right, move_up, move_down);
+
+        Keyboard.key_n = () -> {
+            light0.position.x -= 0.01f;
+        };
+
+        Keyboard.key_m = () -> {
+            light0.position.x += 0.01f;
+        };
+
+        Keyboard.key_h = () -> {
+            light0.position.y -= 0.01f;
+        };
+
+        Keyboard.key_j = () -> {
+            light0.position.y += 0.01f;
+        };
     }
 
     //Exit gracefully.
