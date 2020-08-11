@@ -5,8 +5,14 @@ import static org.lwjgl.opengl.GL11.*;
 public class Cube extends SpatialObject {
 
     public Cube() {
-        //Rotation, Scale, Translate is default
+        scale.x /= 2;
+        scale.y /= 2;
+        scale.z /= 2;
     }
+
+    /**
+     * Draw simple 2x2x2 cube.
+     */
     @Override
     public void render() {
         glPushMatrix();

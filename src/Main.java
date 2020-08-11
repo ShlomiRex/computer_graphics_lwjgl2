@@ -142,6 +142,7 @@ public class Main {
 
         dog.render();
         house.render();
+        light0.render();
     }
 
     public static void main(String[] args) {

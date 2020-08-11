@@ -3,6 +3,9 @@ package Engine.EngineObject;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
+/**
+ * Spatial object is a physical object in space. It has transformations and position. It can be rendered.
+ */
 public abstract class SpatialObject extends EngineObject implements ISpatialObject {
     public Vector3f position;
     public Vector3f rotation;

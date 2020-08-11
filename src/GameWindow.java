@@ -68,5 +68,10 @@ public class GameWindow {
         glLoadIdentity();             // Reset
         // Enable perspective projection with fovy, aspect, zNear and zFar
         GLU.gluPerspective(fovy, (float) width / (float) height, zNear, zFar);
+
+
+        //TODO: THis has cool effect
+        glColorMaterial ( GL_FRONT_AND_BACK, GL_EMISSION ) ;
+        glEnable ( GL_COLOR_MATERIAL ) ;
     }
 }
