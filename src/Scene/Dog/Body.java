@@ -11,7 +11,7 @@ public class Body extends SpatialObject {
     //We can play with these values.
     private final float LEG_HEIGHT = 1f;
     private final float BODY_LENGTH = 3f;
-    
+
     private final float LEG_X_OFFSET = 1f;
     private final float LEG_Y_OFFSET = 1f;
     private final float LEG_Z_OFFSET = 0.5f;

@@ -1,6 +1,7 @@
 import Engine.Camera;
 import Engine.Input.Keyboard;
 import Engine.Input.Mouse;
+import Engine.Light.SpatialLight;
 import GUI.GUIWindow;
 import Scene.Dog.Dog;
 import Scene.House;
@@ -17,6 +18,7 @@ public class Main {
     private Dog dog;
     private House house;
     private Camera camera;
+    private SpatialLight light0;
 
     public Main() {
         guiWindow = new GUIWindow("Controls");
@@ -25,6 +27,7 @@ public class Main {
 
         dog = new Dog();
         house = new House();
+        light0 = new SpatialLight(GL_LIGHT0, false);
     }
 
     private void run() throws LWJGLException {
@@ -39,12 +42,23 @@ public class Main {
         gameWindow.init();
         initKeyboard(gameWindow);
         initMouse();
+
+        initGUIRunnables();
+    }
+
+    private void initGUIRunnables() {
+        GUIWindow.runnable_ambientLight_color = () -> {
+            light0.color = GUIWindow.ambientLightColor;
+        };
+
+        GUIWindow.runnable_ambientLight_intensity = () -> {
+            light0.intensity = GUIWindow.ambientLightIntensity / 100f; //[0, 100] range to [0, 1] for float.
+        };
     }
 
     private void initMouse() {
         Mouse.init(camera);
     }
-
 
     private void initKeyboard(GameWindow window) {
 
@@ -105,10 +119,19 @@ public class Main {
             //Read mouse
             Mouse.poll();
 
+            updateLight(light0);
+
             render();
             Display.update();
             glFlush();
         }
+    }
+
+    private void updateLight(SpatialLight light) {
+        glLight(light.LIGHT_X, GL_POSITION, light.getPositionFloatBuffer());
+        glLight(light.LIGHT_X, GL_AMBIENT, light.getColorFloatBuffer());
+        glLight(light.LIGHT_X, GL_DIFFUSE, light.getColorFloatBuffer());
+        glLight(light.LIGHT_X, GL_SPECULAR, light.getColorFloatBuffer());
     }
 
     //Called each frame.
@@ -128,4 +151,5 @@ public class Main {
             e.printStackTrace();
         }
     }
+
 }

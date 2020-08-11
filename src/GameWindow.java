@@ -20,7 +20,7 @@ public class GameWindow {
     private final float zNear = 0.1f; //Near plane
     private final float zFar = 1000.0f; //Far plane
 
-    private SpatialLight light0;
+
 
     public GameWindow(String title, int width, int height) {
         this.width = width;
@@ -38,7 +38,6 @@ public class GameWindow {
 
         initGUIEvents();
         initOpenGL();
-        initLight0();
     }
 
     private void initGUIEvents() {
@@ -69,9 +68,5 @@ public class GameWindow {
         glLoadIdentity();             // Reset
         // Enable perspective projection with fovy, aspect, zNear and zFar
         GLU.gluPerspective(fovy, (float) width / (float) height, zNear, zFar);
-    }
-
-    private void initLight0() {
-        this.light0 = new SpatialLight(GL_LIGHT0, false);
     }
 }

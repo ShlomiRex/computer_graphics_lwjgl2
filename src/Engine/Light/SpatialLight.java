@@ -1,46 +1,43 @@
 package Engine.Light;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
+import java.awt.*;
 import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_SPECULAR;
 
 public class SpatialLight extends Light {
-    private FloatBuffer position;
 
+    private Vector4f position; //Last element is 'w' which is 'directional light' or not.
 
     public SpatialLight(int light_number, boolean is_directional) {
         super(light_number);
-        position = BufferUtils.createFloatBuffer(4).put(new float[] {0f, 0f, 0f, is_directional ? 0f : 1f});
-        position.rewind();
-
-        updatePosition();
-        updateAmbientLight();
-        updateDiffuseLight();
-        updateSpecularLight();
+        position = new Vector4f(0, 0, 0, is_directional ? 0 : 1);
     }
 
-    private void updatePosition() {
-        glLight(LIGHT_X, GL_POSITION, position);
+    public FloatBuffer getColorFloatBuffer() {
+        float red = color.getRed() / 255f;
+        float green = color.getGreen() / 255f;
+        float blue = color.getBlue() / 255f;
+        float alpha = color.getAlpha() / 255f;
+
+        red *= intensity;
+        green *= intensity;
+        blue *= intensity;
+        alpha *= intensity;
+
+        FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(4).put(new float[]{red, green, blue, alpha});
+        floatBuffer.rewind();
+        return floatBuffer;
     }
 
-    private void updateAmbientLight() {
-        FloatBuffer ambient = BufferUtils.createFloatBuffer(4).put(new float[] { 1.0f, 1.0f, 1.0f, 1.0f});
-        ambient.rewind();
-        glLight(LIGHT_X, GL_AMBIENT, ambient);
-    }
-
-    private void updateDiffuseLight() {
-        FloatBuffer diffuse = BufferUtils.createFloatBuffer(4).put(new float[] { 1.0f, 1.0f, 1.0f, 1.0f});
-        diffuse.rewind();
-        glLight(LIGHT_X, GL_DIFFUSE, diffuse);
-    }
-
-    private void updateSpecularLight() {
-        FloatBuffer specular = BufferUtils.createFloatBuffer(4).put(new float[] { 1.0f, 1.0f, 1.0f, 1.0f});
-        specular.rewind();
-        glLight(LIGHT_X, GL_SPECULAR, specular);
+    public FloatBuffer getPositionFloatBuffer() {
+        FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(4).put(new float[]{position.x, position.y, position.z, position.w});
+        floatBuffer.rewind();
+        return floatBuffer;
     }
 }
