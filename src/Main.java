@@ -116,7 +116,8 @@ public class Main {
 
     //Called each frame.
     private void render() {
-        glTranslatef(0, 0, -40f);
+        //To bring everything in front of camera.
+        glTranslatef(0, 0, -20f);
 
 
         dog.render();
