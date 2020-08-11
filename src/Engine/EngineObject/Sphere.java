@@ -25,5 +25,8 @@ public class Sphere extends SpatialObject {
             GL11.glTranslatef(position.x, position.y, position.z);
             sphere.draw(radius, slices, stacks);
         GL11.glPopMatrix();
+
+        //Render children.
+        super.render();
     }
 }

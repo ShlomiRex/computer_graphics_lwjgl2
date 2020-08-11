@@ -56,5 +56,8 @@ public class Cube extends SpatialObject {
                 glVertex3f(1.0f, -1.0f, -1.0f);
             glEnd();
         glPopMatrix();
+
+        //Render children.
+        super.render();
     }
 }
