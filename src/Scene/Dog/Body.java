@@ -11,8 +11,10 @@ public class Body extends SpatialObject {
     //We can play with these values.
     private final float LEG_HEIGHT = 1f;
     private final float BODY_LENGTH = 3f;
-    private final float LEG_X_OFFSET = 1.5f;
+    
+    private final float LEG_X_OFFSET = 1f;
     private final float LEG_Y_OFFSET = 1f;
+    private final float LEG_Z_OFFSET = 0.5f;
 
     public Body() {
         body = new Sphere();
@@ -43,7 +45,7 @@ public class Body extends SpatialObject {
 
         frontRightLeg.position.x += LEG_X_OFFSET;
         frontRightLeg.position.y -= LEG_Y_OFFSET;
-        frontRightLeg.position.z += BODY_LENGTH;
+        frontRightLeg.position.z += LEG_Z_OFFSET;
     }
 
     private void frontLeft() {
@@ -53,7 +55,7 @@ public class Body extends SpatialObject {
 
         frontLeftLeg.position.x -= LEG_X_OFFSET;
         frontLeftLeg.position.y -= LEG_Y_OFFSET;
-        frontLeftLeg.position.z += BODY_LENGTH;
+        frontLeftLeg.position.z += LEG_Z_OFFSET ;
     }
 
     private void backRight() {
@@ -63,7 +65,7 @@ public class Body extends SpatialObject {
 
         backRightLeg.position.x += LEG_X_OFFSET;
         backRightLeg.position.y -= LEG_Y_OFFSET;
-        backRightLeg.position.z -= BODY_LENGTH;
+        backRightLeg.position.z -= LEG_Z_OFFSET;
     }
 
     private void backLeft() {
@@ -73,6 +75,6 @@ public class Body extends SpatialObject {
 
         backLeftLeg.position.x -= LEG_X_OFFSET;
         backLeftLeg.position.y -= LEG_Y_OFFSET;
-        backLeftLeg.position.z -= BODY_LENGTH;
+        backLeftLeg.position.z -= LEG_Z_OFFSET;
     }
 }

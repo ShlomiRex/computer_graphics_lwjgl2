@@ -21,8 +21,8 @@ public class Sphere extends SpatialObject {
     @Override
     public void render() {
         GL11.glPushMatrix();
-            GL11.glScalef(scale.x, scale.y, scale.z);
             GL11.glTranslatef(position.x, position.y, position.z);
+            GL11.glScalef(scale.x, scale.y, scale.z);
             sphere.draw(radius, slices, stacks);
         GL11.glPopMatrix();
 

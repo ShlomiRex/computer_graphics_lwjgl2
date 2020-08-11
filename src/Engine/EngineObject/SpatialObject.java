@@ -18,8 +18,8 @@ public abstract class SpatialObject extends EngineObject implements ISpatialObje
     public void render() {
         GL11.glPushMatrix();
             //Apply transformation of parent.
-            GL11.glTranslatef(position.x, position.y, position.z);
             GL11.glScalef(scale.x, scale.y, scale.z);
+            GL11.glTranslatef(position.x, position.y, position.z);
 
             for(EngineObject object : children) {
                 if(object instanceof SpatialObject) {

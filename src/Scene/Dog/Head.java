@@ -17,6 +17,17 @@ public class Head extends SpatialObject {
         leftEye = new Cube();
         rightEye = new Cube();
 
+        //Move head to correct position relative to Dog SpatialObject.
+        position.x = 0f;
+        position.y = 1.5f;
+        position.z = 3f;
+
+        //Scale entire head.
+        float s = 0.75f;
+        scale.x *= s;
+        scale.y *= s;
+        scale.z *= s;
+
         name = "Head Class";
         head.name = "Head";
         leftEye.name = "Left Eye";
