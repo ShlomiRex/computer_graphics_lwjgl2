@@ -30,24 +30,25 @@ public class Camera extends SpatialObject  {
 
     public void rotate_around_y(float angle) {
         xz_angle += angle;
-
+        /*
         //Make angle between 0 and 360
-        if (xz_angle < 0)
+        if (xz_angle < 0f)
         {
             float iangle = -xz_angle; //negative sign, iangle is positive
-            iangle = iangle / 360;
-            xz_angle += 360 * iangle;
+            iangle = (float) iangle / 360f;
+            xz_angle += 360f * iangle;
         }
-        else if (xz_angle > 360)
+        else if (xz_angle > 360f)
         {
             float iangle = xz_angle; //positive sign, iangle is positive
-            iangle = iangle / 360;
-            xz_angle -= 360 * iangle;
+            iangle = (float) iangle / 360f;
+            xz_angle -= 360f * iangle;
         }
+         */
 
         //Unit circle X,Y
-        double x_distance = Math.cos(Math.toRadians(xz_angle * Math.PI / 180));
-        double y_distance = Math.sin(Math.toRadians(xz_angle * Math.PI / 180));
+        double x_distance = Math.cos(Math.toRadians(xz_angle));
+        double y_distance = Math.sin(Math.toRadians(xz_angle));
 
         //In unit circle, positive X is the 'base' axis. (from which angles are calculated)
         //But in camera coordinates, we look at negative Z, which we want to calculate angles on XZ plane from.

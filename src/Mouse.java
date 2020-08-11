@@ -13,6 +13,8 @@ public class Mouse {
 
     private static Camera camera;
 
+    private static final float ROTATE_AMOUNT = 1f; //Degrees to turn each update if mouse is dragged
+
     private Mouse() {
     }
 
@@ -24,39 +26,15 @@ public class Mouse {
      * reads a mouse in buffered mode
      */
     public static void poll() {
-        if(org.lwjgl.input.Mouse.isButtonDown(0)) {
-            lastButton = 0;
-        }
-
-        System.out.println(org.lwjgl.input.Mouse.getEventButton());
-
         int dx = org.lwjgl.input.Mouse.getDX();
         int dy = org.lwjgl.input.Mouse.getDY();
         int dw = org.lwjgl.input.Mouse.getDWheel();
 
-
-        // get out if no movement
-        if (dx == dy && dx == 0 && dw == 0) {
-            return;
-        }
-
-
-        if(dx != 0) {
-            Mouse.rotate_left_right = true;
-        }
-
-        if(dy != 0) {
-            Mouse.rotate_up_down = true;
-        }
-
-        // ----------------------------
-        // based on which button was last pushed, update model
-        switch(lastButton) {
-            case -1:
-                break;
-            case 0:
-                camera.rotate_around_y(5);
-                break;
+        if(org.lwjgl.input.Mouse.isButtonDown(0)) {
+            if(dx > 0)
+                camera.rotate_around_y(ROTATE_AMOUNT);
+            else if(dx < 0)
+                camera.rotate_around_y(-ROTATE_AMOUNT);
         }
     }
 }

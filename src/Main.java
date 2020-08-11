@@ -16,7 +16,7 @@ public class Main {
 
     public Main() {
         guiWindow = new GUIWindow("Controls");
-        gameWindow = new GameWindow("My Game", 1600, 900);
+        gameWindow = new GameWindow("My Game", 800, 600);
         dog = new Dog();
         camera = new Camera();
     }
