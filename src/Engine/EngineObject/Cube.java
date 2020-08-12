@@ -1,5 +1,7 @@
 package Engine.EngineObject;
 
+import Engine.Light.Light;
+
 import static org.lwjgl.opengl.GL11.*;
 
 public class Cube extends SpatialObject {
@@ -15,7 +17,11 @@ public class Cube extends SpatialObject {
      */
     @Override
     public void render() {
-        glColor3f(0.5f, 0.5f, 0.5f);
+        float materialColor_red = Light.DEFAULT_AMBIENT.getX() * color.x;
+        float materialColor_green = Light.DEFAULT_AMBIENT.getY() * color.y;
+        float materialColor_blue = Light.DEFAULT_AMBIENT.getZ() * color.z;
+
+        glColor3f(materialColor_red, materialColor_green, materialColor_blue);
 
         glPushMatrix();
             glTranslatef(position.x, position.y, position.z);
@@ -64,9 +70,6 @@ public class Cube extends SpatialObject {
                 glVertex3f(1.0f, -1.0f, -1.0f);
             glEnd();
         glPopMatrix();
-
-        glColor3f(0.5f, 0.5f, 0.5f);
-
         //Render children.
         super.render();
     }

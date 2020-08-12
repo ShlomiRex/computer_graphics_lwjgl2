@@ -6,13 +6,16 @@ import Engine.Light.SpatialLight;
 import Engine.Light.Spotlight;
 import GUI.AmbientPanel;
 import GUI.GUIWindow;
+import GUI.PointLightPanel;
 import GUI.SpotlightPanel;
 import Scene.Dog.Dog;
 import Scene.House;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.glu.GLU;
+
+import java.awt.*;
+import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -23,8 +26,9 @@ public class Main {
     private Dog dog;
     private House house;
     private Camera camera;
-    private Pointlight light0_pointLight;
+    private Pointlight light0_pointLight; //Main scene light (global)
     private Spotlight light1_spotlight;
+    private Pointlight light2_pointLight; //Secondary light
 
     public Main() {
         guiWindow = new GUIWindow("Controls");
@@ -36,23 +40,30 @@ public class Main {
 
         light0_pointLight = new Pointlight(GL_LIGHT0);
         light1_spotlight = new Spotlight(GL_LIGHT1);
+        light2_pointLight = new Pointlight(GL_LIGHT2);
+
+        light0_pointLight.intensity = 0.5f;
+        light0_pointLight.color = Color.BLUE;
+
+        light2_pointLight.intensity =  0.5f;
+        light2_pointLight.color = Color.RED;
     }
 
     private void run() throws LWJGLException {
+        //show gui
         guiWindow.run();
 
-        init();
-        gameLoop();
-        exit();
-    }
-
-    private void init() throws LWJGLException {
+        //init
         gameWindow.init();
         initKeyboard(gameWindow);
         initMouse();
-        //test();
-
         initGUIRunnables();
+
+        //run game
+        gameLoop();
+
+        //game loop finishes, exit
+        exit();
     }
 
     private void initGUIRunnables() {
@@ -63,6 +74,12 @@ public class Main {
         AmbientPanel.runnable_ambientLight_intensity = () -> {
             light0_pointLight.intensity = AmbientPanel.ambientLightIntensity / 100f; //[0, 100] range to [0, 1] for float.
         };
+
+        PointLightPanel.runnable_pointLight_enable = () -> {
+            light2_pointLight.toRender = PointLightPanel.pointLight_enabled;
+        };
+
+
     }
 
     private void initMouse() {
@@ -160,6 +177,9 @@ public class Main {
         }
     }
 
+    /**
+     * Update position for each light in OpenGL context.
+     */
     private void updateLights() {
         updateLight(light0_pointLight);
         updateLight(light1_spotlight);
@@ -170,13 +190,18 @@ public class Main {
             light1_spotlight.direction.z = SpotlightPanel.spotlight_direction_panel.slider3_value;
         }
         glLight(GL_LIGHT1, GL_SPOT_DIRECTION, light1_spotlight.getDirectionFloatBuffer());
+
+        updateLight(light2_pointLight);
     }
 
     private void updateLight(SpatialLight light) {
         glLight(light.LIGHT_X, GL_POSITION, light.getPositionFloatBuffer());
-        glLight(light.LIGHT_X, GL_AMBIENT, light.getColorFloatBuffer());
-        glLight(light.LIGHT_X, GL_DIFFUSE, light.getColorFloatBuffer());
-        glLight(light.LIGHT_X, GL_SPECULAR, light.getColorFloatBuffer());
+
+        FloatBuffer floatBuffer = light.getColorFloatBuffer();
+
+        glLight(light.LIGHT_X, GL_AMBIENT, floatBuffer);
+        glLight(light.LIGHT_X, GL_DIFFUSE, floatBuffer);
+        glLight(light.LIGHT_X, GL_SPECULAR, floatBuffer);
     }
 
     //Called each frame.
@@ -189,18 +214,8 @@ public class Main {
         house.render();
         light0_pointLight.render();
         light1_spotlight.render();
+        light2_pointLight.render();
     }
-
-    /*
-    private void test() {
-        //light1_spotlight.position.y = 3;
-        glLightf(GL_LIGHT1,GL_SPOT_CUTOFF, 20.0f);
-
-        glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.5f);
-        glLight(GL_LIGHT0, GL_DIFFUSE, light1_spotlight.getColorFloatBuffer());
-        glLight(GL_LIGHT0,GL_SPOT_EXPONENT, light1_spotlight.getColorFloatBuffer());
-    }
-    */
 
     public static void main(String[] args) {
         try {

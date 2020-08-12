@@ -4,14 +4,11 @@ import Engine.EngineObject.ISpatialObject;
 import Engine.EngineObject.SpatialObject;
 import Engine.EngineObject.Sphere;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import java.awt.*;
 import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_SPECULAR;
 
 public class SpatialLight extends Light implements ISpatialObject {
 
@@ -19,6 +16,10 @@ public class SpatialLight extends Light implements ISpatialObject {
      * Spatial position in space of light.
      */
     public Vector4f position; //Last element is 'w' which is 'directional light' or not.
+    /**
+     * When true, this object will not be rendered.
+     */
+    public boolean toRender = false;
     /**
      * The rendered spatial object of this light.
      */
@@ -28,6 +29,9 @@ public class SpatialLight extends Light implements ISpatialObject {
         super(light_number);
         position = new Vector4f(0, 0, 0, is_directional ? 0 : 1);
         renderObject = new Sphere();
+        renderObject.color.x = 0.5f;
+        renderObject.color.y = 0.5f;
+        renderObject.color.z = 0f;
     }
 
     /**
@@ -62,13 +66,18 @@ public class SpatialLight extends Light implements ISpatialObject {
 
     @Override
     public void render() {
-        //Render the light in space as yellow sphere spatial object.
-        renderObject.position.x = position.x;
-        renderObject.position.y = position.y;
-        renderObject.position.z = position.z;
+        //Only render enabled lights.
+        if(glIsEnabled(LIGHT_X) && toRender == false) {
+            renderObject.position.x = position.x;
+            renderObject.position.y = position.y;
+            renderObject.position.z = position.z;
 
-        glColor3f(0.5f, 0.5f, 0f);
-        renderObject.render();
-        glColor3f(0.5f, 0.5f, 0.5f);
+            float materialColor_red = Light.DEFAULT_AMBIENT.getX() * renderObject.color.x;
+            float materialColor_green = Light.DEFAULT_AMBIENT.getY() * renderObject.color.y;
+            float materialColor_blue = Light.DEFAULT_AMBIENT.getZ() * renderObject.color.z;
+
+            glColor3f(materialColor_red, materialColor_green, materialColor_blue);
+            renderObject.render();
+        }
     }
 }

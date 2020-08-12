@@ -11,10 +11,17 @@ public abstract class SpatialObject extends EngineObject implements ISpatialObje
     public Vector3f rotation;
     public Vector3f scale;
 
+    //Material properties
+    /**
+     * Pure color (it is multiplied by ambient color)
+     */
+    public Vector3f color;
+
     public SpatialObject() {
         position = new Vector3f();
         rotation = new Vector3f();
         scale = new Vector3f(1, 1, 1);
+        color = new Vector3f(1.0f, 1.0f, 1.0f);
     }
 
     @Override

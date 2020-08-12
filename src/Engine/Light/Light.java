@@ -1,8 +1,14 @@
 package Engine.Light;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import java.awt.*;
 
 public class Light {
+
+    public static final Vector3f DEFAULT_AMBIENT = new Vector3f(0.5f, 0.5f, 0.5f);
+
+
     /**
      * Color of light. Values in [0, 255]
      */

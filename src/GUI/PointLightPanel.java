@@ -19,7 +19,7 @@ public class PointLightPanel extends JPanel {
         checkBox_enable.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pointLight_enabled = checkBox_enable.isEnabled();
+                pointLight_enabled = checkBox_enable.isSelected();
                 runnable_pointLight_enable.run();
             }
         });

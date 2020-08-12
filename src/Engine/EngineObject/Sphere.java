@@ -1,8 +1,11 @@
 package Engine.EngineObject;
 
 
+import Engine.Light.Light;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
+
+import static org.lwjgl.opengl.GL11.glColor3f;
 
 public class Sphere extends SpatialObject {
 
@@ -20,6 +23,12 @@ public class Sphere extends SpatialObject {
 
     @Override
     public void render() {
+        float materialColor_red = Light.DEFAULT_AMBIENT.getX() * color.x;
+        float materialColor_green = Light.DEFAULT_AMBIENT.getY() * color.y;
+        float materialColor_blue = Light.DEFAULT_AMBIENT.getZ() * color.z;
+
+        glColor3f(materialColor_red, materialColor_green, materialColor_blue);
+
         GL11.glPushMatrix();
             GL11.glTranslatef(position.x, position.y, position.z);
             GL11.glScalef(scale.x, scale.y, scale.z);

@@ -16,18 +16,6 @@ public class Spotlight extends SpatialLight {
         direction = new Vector3f(0, 0, -1);
     }
 
-    @Override
-    public void render() {
-        //Render the light in space as yellow sphere spatial object.
-        renderObject.position.x = position.x;
-        renderObject.position.y = position.y;
-        renderObject.position.z = position.z;
-
-        glColor3f(0.5f, 0.5f, 0f);
-        renderObject.render();
-        glColor3f(0.5f, 0.5f, 0.5f);
-    }
-
     public FloatBuffer getDirectionFloatBuffer() {
         float x = position.x + direction.x;
         float y = position.y + direction.y;
