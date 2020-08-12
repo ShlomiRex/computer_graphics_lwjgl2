@@ -41,8 +41,9 @@ public class GameWindow {
     }
 
     private void initLights() {
-        //glEnable(GL_LIGHT0); //TODO: Return this, I only test light 1
-        glEnable(GL_LIGHT1);
+        //TODO: Enable / disable lights for testing
+        glEnable(GL_LIGHT0);
+        //glEnable(GL_LIGHT1);
     }
 
     private void initOpenGL() {

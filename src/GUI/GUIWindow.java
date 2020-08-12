@@ -22,31 +22,16 @@ public class GUIWindow {
     private JPanel jpanel_help;
 
     //Ambient panel
-    private JPanel jpanel_ambientLight;
-    public static Runnable runnable_ambientLight_color; //When user changes ambient color
-    public static Color ambientLightColor = Color.WHITE;
+    private AmbientPanel jpanel_ambientLight;
 
     //Bottom panel
     private JPanel jpanel_bottomControl;
 
     //Point light panel
     private JPanel jpanel_pointLight;
-    public static boolean pointLight_enabled;
-    public static Color pointLightColor = Color.WHITE;
-    public static Runnable runnable_pointLight_enable; //When user changes point light enable/disable
-    public static Runnable runnable_pointLight_color; //When user changes point light color
 
     //Spotlight
     private JPanel jpanel_spotlight;
-    public static boolean spotlight_enabled;
-    public static Color spotlightColor = Color.WHITE;
-    public static Runnable runnable_spotLight_color; //When user changes spotlight color
-    public static float jSlider1Value, jSlider2Value, jSlider3Value;
-    public static SliderControlPanel spotlight_direction_panel;
-
-    //Ambient light
-    public static Runnable runnable_ambientLight_intensity;
-    public static int ambientLightIntensity; //Value is between 0 and 100. You can do mod math to get between 0 and 1.
 
     public GUIWindow(String title) {
         window = new JFrame(title);
@@ -57,144 +42,18 @@ public class GUIWindow {
 
         initPanel_CameraSelect();
         initPanel_Help();
-        initPanel_AmbientLight();
-        initPanel_PointLight();
-        initPanel_Spotlight();
-        initPanel_buttomControls();
-    }
 
-    private void initPanel_Spotlight() {
-        jpanel_spotlight = new JPanel();
-        jpanel_spotlight.setBorder(BorderFactory.createTitledBorder("Spotlight"));
-
-        JCheckBox checkBox_enable = new JCheckBox("Enable");
-        checkBox_enable.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                spotlight_enabled = checkBox_enable.isEnabled();
-                runnable_spotLight_color.run();
-            }
-        });
-        jpanel_spotlight.add(checkBox_enable);
-
-        JButton btnColor = new JButton("Color");
-        btnColor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Color newColor = JColorChooser.showDialog(null, "Choose spotlight color", Color.WHITE);
-                spotlightColor = newColor;
-                runnable_spotLight_color.run();
-            }
-        });
-        jpanel_spotlight.add(btnColor);
-
-
-        JButton jButton = new JButton("Direction");
-        jButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame jFrame = new JFrame("Direction control");
-                spotlight_direction_panel = new SliderControlPanel(); //We create each time because to reset x,y,z,w
-                jFrame.add(spotlight_direction_panel);
-                jFrame.setVisible(true);
-                jFrame.pack();
-            }
-        });
-        jpanel_spotlight.add(jButton);
-
-        panel.add(jpanel_spotlight);
-    }
-
-    private void initPanel_PointLight() {
-        jpanel_pointLight = new JPanel();
-        jpanel_pointLight.setBorder(BorderFactory.createTitledBorder("Point Engine.Light"));
-
-        JCheckBox checkBox_enable = new JCheckBox("Enable");
-        checkBox_enable.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pointLight_enabled = checkBox_enable.isEnabled();
-                runnable_pointLight_enable.run();
-            }
-        });
-        jpanel_pointLight.add(checkBox_enable);
-
-        JButton btnColor = new JButton("Color");
-        btnColor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Color newColor = JColorChooser.showDialog(null, "Choose point light color", Color.WHITE);
-                pointLightColor = newColor;
-                runnable_pointLight_color.run();
-            }
-        });
-        jpanel_pointLight.add(btnColor);
-
-        panel.add(jpanel_pointLight);
-    }
-
-    private void initPanel_buttomControls() {
-        jpanel_bottomControl = new JPanel();
-
-        JButton quit = new JButton("Quit");
-        quit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
-        JButton credits = new JButton("Credits");
-        credits.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Shlomi & Shlomi");
-            }
-        });
-
-        jpanel_bottomControl.add(credits);
-        jpanel_bottomControl.add(quit);
-
-        panel.add(jpanel_bottomControl);
-    }
-
-    private void initPanel_AmbientLight() {
-        jpanel_ambientLight = new JPanel();
-        jpanel_ambientLight.setBorder(BorderFactory.createTitledBorder("Ambient Engine.Light"));
-
-        //Slider
-        int min = 0;
-        int max = 100;
-        int value = max/2;
-        JSlider jSlider = new JSlider(min, max, value);
-        jSlider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                ambientLightIntensity = jSlider.getValue();
-                runnable_ambientLight_intensity.run();
-            }
-        });
-        jpanel_ambientLight.add(jSlider);
-        //Turn on labels at major tick marks.
-        jSlider.setMajorTickSpacing(10);
-        jSlider.setMinorTickSpacing(1);
-        jSlider.setPaintTicks(true);
-        jSlider.setPaintLabels(true);
-
-        //Color
-        JButton btnColor = new JButton("Color");
-        btnColor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Color newColor = JColorChooser.showDialog(null, "Choose ambient light color", Color.WHITE);
-                ambientLightColor = newColor;
-                runnable_ambientLight_color.run();
-            }
-        });
-        jpanel_ambientLight.add(btnColor);
-
-
+        jpanel_ambientLight = new AmbientPanel();
         panel.add(jpanel_ambientLight);
+
+        jpanel_pointLight = new PointLightPanel();
+        panel.add(jpanel_pointLight);
+
+        jpanel_spotlight = new SpotlightPanel();
+        panel.add(jpanel_spotlight);
+
+        jpanel_bottomControl = new BottomPanel();
+        panel.add(jpanel_bottomControl);
     }
 
     private void initPanel_Help() {
@@ -247,10 +106,6 @@ public class GUIWindow {
                 runnable_camera_dog.run();
             }
         });
-    }
-
-    public GUIWindow() {
-        this("GUI");
     }
 
     public void run() {

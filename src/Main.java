@@ -4,7 +4,9 @@ import Engine.Input.Keyboard;
 import Engine.Input.Mouse;
 import Engine.Light.SpatialLight;
 import Engine.Light.Spotlight;
+import GUI.AmbientPanel;
 import GUI.GUIWindow;
+import GUI.SpotlightPanel;
 import Scene.Dog.Dog;
 import Scene.House;
 import org.lwjgl.BufferUtils;
@@ -48,18 +50,18 @@ public class Main {
         gameWindow.init();
         initKeyboard(gameWindow);
         initMouse();
-        test();
+        //test();
 
         initGUIRunnables();
     }
 
     private void initGUIRunnables() {
-        GUIWindow.runnable_ambientLight_color = () -> {
-            light0_pointLight.color = GUIWindow.ambientLightColor;
+        AmbientPanel.runnable_ambientLight_color = () -> {
+            light0_pointLight.color = AmbientPanel.ambientLightColor;
         };
 
-        GUIWindow.runnable_ambientLight_intensity = () -> {
-            light0_pointLight.intensity = GUIWindow.ambientLightIntensity / 100f; //[0, 100] range to [0, 1] for float.
+        AmbientPanel.runnable_ambientLight_intensity = () -> {
+            light0_pointLight.intensity = AmbientPanel.ambientLightIntensity / 100f; //[0, 100] range to [0, 1] for float.
         };
     }
 
@@ -162,10 +164,10 @@ public class Main {
         updateLight(light0_pointLight);
         updateLight(light1_spotlight);
 
-        if(GUIWindow.spotlight_direction_panel != null) {
-            light1_spotlight.direction.x = GUIWindow.spotlight_direction_panel.slider1_value;
-            light1_spotlight.direction.y = GUIWindow.spotlight_direction_panel.slider2_value;
-            light1_spotlight.direction.z = GUIWindow.spotlight_direction_panel.slider3_value;
+        if(SpotlightPanel.spotlight_direction_panel != null) {
+            light1_spotlight.direction.x = SpotlightPanel.spotlight_direction_panel.slider1_value;
+            light1_spotlight.direction.y = SpotlightPanel.spotlight_direction_panel.slider2_value;
+            light1_spotlight.direction.z = SpotlightPanel.spotlight_direction_panel.slider3_value;
         }
         glLight(GL_LIGHT1, GL_SPOT_DIRECTION, light1_spotlight.getDirectionFloatBuffer());
     }
@@ -189,14 +191,16 @@ public class Main {
         light1_spotlight.render();
     }
 
+    /*
     private void test() {
         //light1_spotlight.position.y = 3;
-        glLightf(GL_LIGHT0,GL_SPOT_CUTOFF, 20.0f);
+        glLightf(GL_LIGHT1,GL_SPOT_CUTOFF, 20.0f);
 
         glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.5f);
         glLight(GL_LIGHT0, GL_DIFFUSE, light1_spotlight.getColorFloatBuffer());
         glLight(GL_LIGHT0,GL_SPOT_EXPONENT, light1_spotlight.getColorFloatBuffer());
     }
+    */
 
     public static void main(String[] args) {
         try {
