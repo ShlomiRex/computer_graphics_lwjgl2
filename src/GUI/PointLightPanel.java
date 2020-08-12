@@ -23,6 +23,7 @@ public class PointLightPanel extends JPanel {
                 runnable_pointLight_enable.run();
             }
         });
+        checkBox_enable.setSelected(true);
         add(checkBox_enable);
 
         JButton btnColor = new JButton("Color");

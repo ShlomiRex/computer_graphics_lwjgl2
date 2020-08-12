@@ -19,7 +19,7 @@ public class SpatialLight extends Light implements ISpatialObject {
     /**
      * When true, this object will not be rendered.
      */
-    public boolean toRender = false;
+    public boolean toRender;
     /**
      * The rendered spatial object of this light.
      */
@@ -29,6 +29,10 @@ public class SpatialLight extends Light implements ISpatialObject {
         super(light_number);
         position = new Vector4f(0, 0, 0, is_directional ? 0 : 1);
         renderObject = new Sphere();
+        toRender = true;
+
+        renderObject.name = "Light " + ((light_number / GL_LIGHT0) - 1);
+
         renderObject.color.x = 0.5f;
         renderObject.color.y = 0.5f;
         renderObject.color.z = 0f;
@@ -66,18 +70,18 @@ public class SpatialLight extends Light implements ISpatialObject {
 
     @Override
     public void render() {
-        //Only render enabled lights.
-        if(glIsEnabled(LIGHT_X) && toRender == false) {
-            renderObject.position.x = position.x;
-            renderObject.position.y = position.y;
-            renderObject.position.z = position.z;
+        if(toRender == false || glIsEnabled(LIGHT_X) == false)
+            return;
 
-            float materialColor_red = Light.DEFAULT_AMBIENT.getX() * renderObject.color.x;
-            float materialColor_green = Light.DEFAULT_AMBIENT.getY() * renderObject.color.y;
-            float materialColor_blue = Light.DEFAULT_AMBIENT.getZ() * renderObject.color.z;
+        renderObject.position.x = position.x;
+        renderObject.position.y = position.y;
+        renderObject.position.z = position.z;
 
-            glColor3f(materialColor_red, materialColor_green, materialColor_blue);
-            renderObject.render();
-        }
+        float materialColor_red = Light.DEFAULT_AMBIENT.getX() * renderObject.color.x;
+        float materialColor_green = Light.DEFAULT_AMBIENT.getY() * renderObject.color.y;
+        float materialColor_blue = Light.DEFAULT_AMBIENT.getZ() * renderObject.color.z;
+
+        glColor3f(materialColor_red, materialColor_green, materialColor_blue);
+        renderObject.render();
     }
 }
