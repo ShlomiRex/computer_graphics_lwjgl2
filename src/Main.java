@@ -1,10 +1,13 @@
 import Engine.Camera;
+import Engine.EngineObject.Pointlight;
 import Engine.Input.Keyboard;
 import Engine.Input.Mouse;
 import Engine.Light.SpatialLight;
+import Engine.Light.Spotlight;
 import GUI.GUIWindow;
 import Scene.Dog.Dog;
 import Scene.House;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.glu.GLU;
@@ -18,7 +21,8 @@ public class Main {
     private Dog dog;
     private House house;
     private Camera camera;
-    private SpatialLight light0;
+    private Pointlight light0_pointLight;
+    private Spotlight light1_spotlight;
 
     public Main() {
         guiWindow = new GUIWindow("Controls");
@@ -27,7 +31,9 @@ public class Main {
 
         dog = new Dog();
         house = new House();
-        light0 = new SpatialLight(GL_LIGHT0, false);
+
+        light0_pointLight = new Pointlight(GL_LIGHT0);
+        light1_spotlight = new Spotlight(GL_LIGHT1);
     }
 
     private void run() throws LWJGLException {
@@ -42,17 +48,18 @@ public class Main {
         gameWindow.init();
         initKeyboard(gameWindow);
         initMouse();
+        test();
 
         initGUIRunnables();
     }
 
     private void initGUIRunnables() {
         GUIWindow.runnable_ambientLight_color = () -> {
-            light0.color = GUIWindow.ambientLightColor;
+            light0_pointLight.color = GUIWindow.ambientLightColor;
         };
 
         GUIWindow.runnable_ambientLight_intensity = () -> {
-            light0.intensity = GUIWindow.ambientLightIntensity / 100f; //[0, 100] range to [0, 1] for float.
+            light0_pointLight.intensity = GUIWindow.ambientLightIntensity / 100f; //[0, 100] range to [0, 1] for float.
         };
     }
 
@@ -89,19 +96,27 @@ public class Main {
         Keyboard.init(move_forward, move_backward, move_left, move_right, move_up, move_down);
 
         Keyboard.key_n = () -> {
-            light0.position.x -= 0.01f;
+            light0_pointLight.position.x -= 0.01f;
         };
 
         Keyboard.key_m = () -> {
-            light0.position.x += 0.01f;
+            light0_pointLight.position.x += 0.01f;
         };
 
         Keyboard.key_h = () -> {
-            light0.position.y -= 0.01f;
+            light0_pointLight.position.y -= 0.01f;
         };
 
         Keyboard.key_j = () -> {
-            light0.position.y += 0.01f;
+            light0_pointLight.position.y += 0.01f;
+        };
+
+        Keyboard.key_o = () -> {
+            light1_spotlight.position.y += 0.01f;
+        };
+
+        Keyboard.key_p = () -> {
+            light1_spotlight.position.y -= 0.01f;
         };
     }
 
@@ -135,12 +150,24 @@ public class Main {
             //Read mouse
             Mouse.poll();
 
-            updateLight(light0);
+            updateLights();
 
             render();
             Display.update();
             glFlush();
         }
+    }
+
+    private void updateLights() {
+        updateLight(light0_pointLight);
+        updateLight(light1_spotlight);
+
+        if(GUIWindow.spotlight_direction_panel != null) {
+            light1_spotlight.direction.x = GUIWindow.spotlight_direction_panel.slider1_value;
+            light1_spotlight.direction.y = GUIWindow.spotlight_direction_panel.slider2_value;
+            light1_spotlight.direction.z = GUIWindow.spotlight_direction_panel.slider3_value;
+        }
+        glLight(GL_LIGHT1, GL_SPOT_DIRECTION, light1_spotlight.getDirectionFloatBuffer());
     }
 
     private void updateLight(SpatialLight light) {
@@ -158,7 +185,17 @@ public class Main {
 
         dog.render();
         house.render();
-        light0.render();
+        light0_pointLight.render();
+        light1_spotlight.render();
+    }
+
+    private void test() {
+        //light1_spotlight.position.y = 3;
+        glLightf(GL_LIGHT0,GL_SPOT_CUTOFF, 20.0f);
+
+        glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.5f);
+        glLight(GL_LIGHT0, GL_DIFFUSE, light1_spotlight.getColorFloatBuffer());
+        glLight(GL_LIGHT0,GL_SPOT_EXPONENT, light1_spotlight.getColorFloatBuffer());
     }
 
     public static void main(String[] args) {

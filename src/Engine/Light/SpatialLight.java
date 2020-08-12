@@ -22,7 +22,7 @@ public class SpatialLight extends Light implements ISpatialObject {
     /**
      * The rendered spatial object of this light.
      */
-    private SpatialObject renderObject;
+    protected SpatialObject renderObject;
 
     public SpatialLight(int light_number, boolean is_directional) {
         super(light_number);

@@ -9,6 +9,7 @@ public class Keyboard {
     public static Runnable dog_head_rotate_clockwise, dog_head_rotate_cclockwise;
     public static Runnable key_h, key_j;
     public static Runnable key_n, key_m;
+    public static Runnable key_o, key_p;
 
     private Keyboard() {
 
@@ -75,6 +76,12 @@ public class Keyboard {
             key_h.run();
         } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_J)) {
             key_j.run();
+        }
+
+        if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_O)) {
+            key_o.run();
+        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_P)) {
+            key_p.run();
         }
     }
 }

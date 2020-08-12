@@ -15,39 +15,34 @@ public class GUIWindow {
     private JPanel jpanel_cameraSelect;
     private JRadioButton radioBtn_cameraSelect_external;
     private JRadioButton radioBtn_cameraSelect_dog;
+    public static Runnable runnable_camera_external;
+    public static Runnable runnable_camera_dog;
 
     //Help panel
     private JPanel jpanel_help;
 
     //Ambient panel
     private JPanel jpanel_ambientLight;
+    public static Runnable runnable_ambientLight_color; //When user changes ambient color
     public static Color ambientLightColor = Color.WHITE;
+
+    //Bottom panel
+    private JPanel jpanel_bottomControl;
 
     //Point light panel
     private JPanel jpanel_pointLight;
     public static boolean pointLight_enabled;
     public static Color pointLightColor = Color.WHITE;
-
-    //Spotlight Panel
-    private JPanel jpanel_spotlight;
-    public static boolean spotlight_enabled;
-    public static Color spotlightColor = Color.WHITE;
-
-    //Bottom panel
-    private JPanel jpanel_bottomControl;
-
-    //Set this runnable objects outside this class to do something when user clicks on changes GUI components.
-
-    public static Runnable runnable_camera_external;
-    public static Runnable runnable_camera_dog;
-    public static Runnable runnable_ambientLight_color; //When user changes ambient color
-
-    //Point Engine.Light
     public static Runnable runnable_pointLight_enable; //When user changes point light enable/disable
     public static Runnable runnable_pointLight_color; //When user changes point light color
 
     //Spotlight
+    private JPanel jpanel_spotlight;
+    public static boolean spotlight_enabled;
+    public static Color spotlightColor = Color.WHITE;
     public static Runnable runnable_spotLight_color; //When user changes spotlight color
+    public static float jSlider1Value, jSlider2Value, jSlider3Value;
+    public static SliderControlPanel spotlight_direction_panel;
 
     //Ambient light
     public static Runnable runnable_ambientLight_intensity;
@@ -92,6 +87,20 @@ public class GUIWindow {
             }
         });
         jpanel_spotlight.add(btnColor);
+
+
+        JButton jButton = new JButton("Direction");
+        jButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame jFrame = new JFrame("Direction control");
+                spotlight_direction_panel = new SliderControlPanel(); //We create each time because to reset x,y,z,w
+                jFrame.add(spotlight_direction_panel);
+                jFrame.setVisible(true);
+                jFrame.pack();
+            }
+        });
+        jpanel_spotlight.add(jButton);
 
         panel.add(jpanel_spotlight);
     }

@@ -37,21 +37,20 @@ public class GameWindow {
         Display.create();
 
         initOpenGL();
+        initLights();
+    }
+
+    private void initLights() {
+        //glEnable(GL_LIGHT0); //TODO: Return this, I only test light 1
+        glEnable(GL_LIGHT1);
     }
 
     private void initOpenGL() {
         glEnable(GL_CULL_FACE);
         glEnable(GL_LIGHTING);
-        glEnable(GL_LIGHT0);
         glShadeModel(GL_SMOOTH);
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_NORMALIZE);
-
-
-        //glMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, new FloatBuffer());
-        //glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-        //FloatBuffer ambientLightColor = BufferUtils.createFloatBuffer(4).put(new float[]{1.0f, 1.0f, 1.0f, 1.0f});
-        //glLightModelf(GL_LIGHT_MODEL_AMBIENT, ambientLightColor);
 
         // Set the viewport to cover the new window
         glViewport(0, 0, width, height);
