@@ -7,9 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUIWindow {
-    private JFrame window;
-    private JPanel panel;
+public class GUIWindow extends JFrame {
 
     //Camera panel
     private JPanel jpanel_cameraSelect;
@@ -17,9 +15,6 @@ public class GUIWindow {
     private JRadioButton radioBtn_cameraSelect_dog;
     public static Runnable runnable_camera_external;
     public static Runnable runnable_camera_dog;
-
-    //Help panel
-    private JPanel jpanel_help;
 
     //Ambient panel
     private AmbientPanel jpanel_ambientLight;
@@ -34,24 +29,23 @@ public class GUIWindow {
     private JPanel jpanel_spotlight;
 
     public GUIWindow(String title) {
-        window = new JFrame(title);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        window.add(panel);
+        super(title);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         initPanel_CameraSelect();
         jpanel_ambientLight = new AmbientPanel();
-        panel.add(jpanel_ambientLight);
+        add(jpanel_ambientLight);
 
         jpanel_pointLight = new PointLightPanel();
-        panel.add(jpanel_pointLight);
+        add(jpanel_pointLight);
 
-        jpanel_spotlight = new SpotlightPanel();
-        panel.add(jpanel_spotlight);
+        jpanel_spotlight = new SpotlightPanel(this);
+        add(jpanel_spotlight);
 
         jpanel_bottomControl = new BottomPanel();
-        panel.add(jpanel_bottomControl);
+        add(jpanel_bottomControl);
 
     }
 
@@ -70,7 +64,7 @@ public class GUIWindow {
         jpanel_cameraSelect.add(radioBtn_cameraSelect_external);
         jpanel_cameraSelect.add(radioBtn_cameraSelect_dog);
 
-        panel.add(jpanel_cameraSelect);
+        add(jpanel_cameraSelect);
 
         radioBtn_cameraSelect_external.addActionListener(new ActionListener() {
             @Override
@@ -90,8 +84,8 @@ public class GUIWindow {
     }
 
     public void run() {
-        window.pack();
-        window.setVisible(true);
+        pack();
+        setVisible(true);
     }
 
     public void exit() {

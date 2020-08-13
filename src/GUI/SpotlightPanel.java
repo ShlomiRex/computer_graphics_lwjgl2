@@ -12,14 +12,18 @@ public class SpotlightPanel extends JPanel {
     public static Runnable runnable_spotLight_color; //When user changes spotlight color
     public static SliderControlPanel spotlight_direction_panel;
     public static Runnable runnable_spotLight_enabled;
+    public static PositionControlPanel positionControlPanel;
 
-    public SpotlightPanel() {
+    public SpotlightPanel(JFrame parent) {
         setBorder(BorderFactory.createTitledBorder("Spotlight"));
-        spotlight_direction_panel = new SliderControlPanel(true);
+        int min = -50;
+        int max = 50;
+        spotlight_direction_panel = new SliderControlPanel(true, min, max);
         spotlight_direction_panel.jSlider1.setValue(0); //0*50
         spotlight_direction_panel.jSlider2.setValue(0); //0*50
-        spotlight_direction_panel.jSlider3.setValue(-50); //-1*50
-        spotlight_direction_panel.jSlider4.setValue(50); //1*50
+        spotlight_direction_panel.jSlider3.setValue(min); //-1*50
+
+        positionControlPanel = new PositionControlPanel();
 
         JCheckBox checkBox_enable = new JCheckBox("Enable");
         checkBox_enable.addActionListener(new ActionListener() {
@@ -49,6 +53,7 @@ public class SpotlightPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame jFrame = new JFrame("Direction control");
+                jFrame.setLocationRelativeTo(parent);
                 jFrame.add(spotlight_direction_panel);
                 jFrame.setVisible(true);
                 jFrame.pack();
@@ -57,5 +62,17 @@ public class SpotlightPanel extends JPanel {
         add(jButton);
 
 
+        JButton jButton_position = new JButton("Position");
+        jButton_position.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame jFrame = new JFrame("Position");
+                jFrame.setLocationRelativeTo(parent);
+                jFrame.add(positionControlPanel);
+                jFrame.pack();
+                jFrame.setVisible(true);
+            }
+        });
+        add(jButton_position);
     }
 }

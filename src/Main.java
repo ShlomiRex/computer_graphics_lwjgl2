@@ -2,7 +2,6 @@ import Engine.Camera;
 import Engine.EngineObject.Pointlight;
 import Engine.Input.Keyboard;
 import Engine.Input.Mouse;
-import Engine.Light.SpatialLight;
 import Engine.Light.Spotlight;
 import GUI.AmbientPanel;
 import GUI.GUIWindow;
@@ -10,13 +9,11 @@ import GUI.PointLightPanel;
 import GUI.SpotlightPanel;
 import Scene.Dog.Dog;
 import Scene.House;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.glu.GLU;
 
 import java.awt.*;
-import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -27,6 +24,7 @@ public class Main {
     private Dog dog;
     private House house;
     private Camera camera;
+
     private Pointlight light0_pointLight; //Main scene light (global)
     private Spotlight light1_spotlight;
     private Pointlight light2_pointLight; //Secondary light
@@ -52,8 +50,8 @@ public class Main {
         gameWindow.init();
         initKeyboard();
         initMouse();
-        initGUIRunnables();
         initLights();
+        initGUIStuff();
 
         //run game
         gameLoop();
@@ -98,10 +96,10 @@ public class Main {
         //Execute OpenGL context for the first time for the lights.
         light0_pointLight.updateNeeded = true;
         light1_spotlight.updateNeeded = true;
-        //light2_pointLight.updateNeeded = true;
+        light2_pointLight.updateNeeded = true;
     }
 
-    private void initGUIRunnables() {
+    private void initGUIStuff() {
         //Light 0
         AmbientPanel.runnable_ambientLight_color = () -> {
             light0_pointLight.color = AmbientPanel.ambientLightColor;
@@ -113,7 +111,7 @@ public class Main {
             light0_pointLight.updateNeeded = true;
         };
 
-        //Light 1
+        //Spotlight - Light 1
         SpotlightPanel.runnable_spotLight_color = () -> {
             light1_spotlight.color = SpotlightPanel.spotlightColor;
             light1_spotlight.updateNeeded = true;
@@ -131,6 +129,21 @@ public class Main {
 
             light1_spotlight.updateNeeded = true;
         };
+
+        SpotlightPanel.positionControlPanel.xAxis.setValue(light1_spotlight.position.x);
+        SpotlightPanel.positionControlPanel.yAxis.setValue(light1_spotlight.position.y);
+        SpotlightPanel.positionControlPanel.zAxis.setValue(light1_spotlight.position.z);
+
+        //Initialize runnable only after we set initial spotlight position panel jtextfield values.
+        //Important to NOT take 3 lines before and put them after this lines.
+        SpotlightPanel.positionControlPanel.runnable_when_position_value_changed_in_gui = () -> {
+            light1_spotlight.position.x = SpotlightPanel.positionControlPanel.xAxis.getValue();
+            light1_spotlight.position.y = SpotlightPanel.positionControlPanel.yAxis.getValue();
+            light1_spotlight.position.z = SpotlightPanel.positionControlPanel.zAxis.getValue();
+
+            light1_spotlight.updateNeeded = true;
+        };
+
 
         //Light 2
         PointLightPanel.runnable_pointLight_enable = () -> {
