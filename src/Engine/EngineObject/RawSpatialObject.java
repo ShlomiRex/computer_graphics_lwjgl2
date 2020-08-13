@@ -77,6 +77,8 @@ public abstract class RawSpatialObject extends BaseSpatialObject implements ISpa
         }
         GL11.glEnd();
 
+        renderChildren();
+
         glClearColor(1, 1, 1, 1);
 
         glEnable(GL_LIGHTING);

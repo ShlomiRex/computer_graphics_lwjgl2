@@ -3,14 +3,10 @@ package Engine.EngineObject;
 import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.GL_LIGHTING;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glNormal3f;
 
 public abstract class SpatialObject extends BaseSpatialObject implements ISpatialObject {
 
@@ -41,13 +37,8 @@ public abstract class SpatialObject extends BaseSpatialObject implements ISpatia
                 break;
         }
 
-        for (BaseObject object : children) {
-            if (object instanceof RawSpatialObject) {
-                ((RawSpatialObject) object).render();
-            } else if (object instanceof SpatialObject) {
-                ((SpatialObject) object).render();
-            }
-        }
+        renderChildren();
+
         glClearColor(1, 1, 1, 1);
 
         glEnable(GL_LIGHTING);
