@@ -28,19 +28,19 @@ public class Pile extends SpatialObject {
             box1.position = new Vector3f(position);
             box1.position.y = yPosition;
 
-            this.children.add(box1);
+            addChildren(box1);
 
             Box box2 = getBox(boxScale, rotation);
             box2.position = new Vector3f(position.x + 1 * boxScale.x, yPosition, position.z);
-            this.children.add(box2);
+            addChildren(box2);
 
             Box box3 = getBox(boxScale, rotation);
             box3.position = new Vector3f(position.x + 1 * boxScale.x, yPosition, position.z + boxScale.z);
-            this.children.add(box3);
+            addChildren(box3);
 
             Box box4 = getBox(boxScale, rotation);
             box4.position = new Vector3f(position.x + 1 * boxScale.x, yPosition + boxScale.y * 1, position.z + boxScale.z);
-            this.children.add(box4);
+            addChildren(box4);
 
 //            ObjectInSpace box3 = getBox(scale, boxMesh, rotation);
 //            box3.setPosition(position.x + scale, yPosition, position.z + scale * 2);

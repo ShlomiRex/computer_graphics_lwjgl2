@@ -2,17 +2,11 @@ package Scene.boxpile;
 
 
 import Engine.EngineObject.OBJLoader;
-import Engine.EngineObject.RawModel;
 import Engine.EngineObject.RawSpatialObject;
-import Engine.EngineObject.SpatialObject;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 public class Box extends RawSpatialObject {
-    private float floorPositionY;
-    private final OBJLoader loader = new OBJLoader();
-
     public Box(String fileName, Vector3f position, Vector3f scale, Vector3f rotation) {
         super(fileName);
 
