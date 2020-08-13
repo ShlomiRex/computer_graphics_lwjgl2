@@ -2,6 +2,7 @@ package Scene;
 
 import Engine.EngineObject.Cube;
 import Engine.EngineObject.SpatialObject;
+import Scene.Dog.Dog;
 import Scene.boxpile.Pile;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
@@ -16,7 +17,6 @@ public class House extends SpatialObject {
     private Cube floor, backWall, leftWall, rightWall;
 
     public House() {
-        float scale = 10;
 //        this.setScale(new Vector3f(scale, scale, scale));
 //        this.setPosition(new Vector3f(0, 0, 0));
 
@@ -51,13 +51,16 @@ public class House extends SpatialObject {
         rightWall.position.y += position.y;
         rightWall.setColor(new Vector4f(0.7f, 0.3f, 0.9f, 1));
 
-        Pile pile = getBoxPile(scale / 100, floor, backWall, leftWall);
+        Pile pile = getBoxPile(0.1f, floor, backWall, leftWall);
 
-        children.add(pile);
-        children.add(floor);
-        children.add(backWall);
-        children.add(leftWall);
-        children.add(rightWall);
+        Dog dog = getDog(0.25f, floor, backWall, leftWall);
+
+        addChildren(dog);
+        addChildren(pile);
+        addChildren(floor);
+        addChildren(backWall);
+        addChildren(leftWall);
+        addChildren(rightWall);
     }
 
     private Pile getBoxPile(float scale, Cube floor, Cube backWall, Cube leftWall) {
@@ -66,5 +69,19 @@ public class House extends SpatialObject {
         Vector3f boxRotation = new Vector3f(0, -255, 0);
         Pile boxPile = new Pile(pilePosition, boxScale, boxRotation);
         return boxPile;
+    }
+
+    private Dog getDog(float scale, Cube floor, Cube backWall, Cube leftWall) {
+        Vector3f vScale = new Vector3f(scale, scale, scale);
+        Vector3f position = new Vector3f(rightWall.position.x - scale * 2.5f, floor.position.y + scale * 0.4f, floor.position.z + floor.getScale().z * 0.75f);
+
+//        Vector3f position = new Vector3f(0, floor.getPosition().y + scale, 0);
+        Vector3f rotation = new Vector3f(0, -45, 0);
+        Dog dog = new Dog();
+        dog.setPosition(position);
+        dog.setScale(vScale);
+        dog.setRotation(rotation);
+        dog.setRenderingOrder(RenderingOrder.TRANSLATION_ROTATION_SCALING);
+        return dog;
     }
 }

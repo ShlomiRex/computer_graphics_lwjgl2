@@ -2,6 +2,7 @@ package Scene.Dog;
 
 import Engine.EngineObject.SpatialObject;
 import Engine.EngineObject.Sphere;
+import org.lwjgl.util.vector.Vector4f;
 
 public class Body extends SpatialObject {
 
@@ -9,21 +10,22 @@ public class Body extends SpatialObject {
     private Sphere backLeftLeg, backRightLeg, frontLeftLeg, frontRightLeg;
 
     //We can play with these values.
-    private final float LEG_HEIGHT = 1f;
-    private final float BODY_LENGTH = 3f;
+    private final float LEG_HEIGHT = 0.75f;
+    private final float BODY_LENGTH = 2f;
+    private final float LEG_VOLUME = 1 / (BODY_LENGTH * 2);
 
-    private final float LEG_X_OFFSET = 1f;
+
+    private final float LEG_X_OFFSET = 2.5f;
     private final float LEG_Y_OFFSET = 1f;
-    private final float LEG_Z_OFFSET = 0.5f;
+    private final float LEG_Z_OFFSET = 2.6f;
 
-    public Body() {
+    public Body(Vector4f color) {
         body = new Sphere();
         backLeftLeg = new Sphere();
         backRightLeg = new Sphere();
         frontLeftLeg = new Sphere();
         frontRightLeg = new Sphere();
-
-
+        this.setRenderingOrder(RenderingOrder.TRANSLATION_ROTATION_SCALING);
         body.scale.z = BODY_LENGTH;
 
         backLeft();
@@ -31,15 +33,22 @@ public class Body extends SpatialObject {
         frontLeft();
         frontRight();
 
-        children.add(body);
-        body.children.add(backLeftLeg);
-        body.children.add(backRightLeg);
-        body.children.add(frontLeftLeg);
-        body.children.add(frontRightLeg);
+        backLeftLeg.setColor(color);
+        backRightLeg.setColor(color);
+        frontLeftLeg.setColor(color);
+        frontRightLeg.setColor(color);
+        body.setColor(color);
+
+        addChildren(body);
+        body.addChildren(backLeftLeg);
+        body.addChildren(backRightLeg);
+        body.addChildren(frontLeftLeg);
+        body.addChildren(frontRightLeg);
+
     }
 
     private void frontRight() {
-        frontRightLeg.scale.x /= BODY_LENGTH;
+        frontRightLeg.scale.x = LEG_VOLUME;
         frontRightLeg.scale.y = LEG_HEIGHT;
         frontRightLeg.scale.z /= BODY_LENGTH * 2;
 
@@ -49,17 +58,17 @@ public class Body extends SpatialObject {
     }
 
     private void frontLeft() {
-        frontLeftLeg.scale.x /= BODY_LENGTH;
+        frontLeftLeg.scale.x = LEG_VOLUME;
         frontLeftLeg.scale.y = LEG_HEIGHT;
         frontLeftLeg.scale.z /= BODY_LENGTH * 2;
 
         frontLeftLeg.position.x -= LEG_X_OFFSET;
         frontLeftLeg.position.y -= LEG_Y_OFFSET;
-        frontLeftLeg.position.z += LEG_Z_OFFSET ;
+        frontLeftLeg.position.z += LEG_Z_OFFSET;
     }
 
     private void backRight() {
-        backRightLeg.scale.x /= BODY_LENGTH;
+        backRightLeg.scale.x = LEG_VOLUME;
         backRightLeg.scale.y = LEG_HEIGHT;
         backRightLeg.scale.z /= BODY_LENGTH * 2;
 
@@ -69,7 +78,7 @@ public class Body extends SpatialObject {
     }
 
     private void backLeft() {
-        backLeftLeg.scale.x /= BODY_LENGTH;
+        backLeftLeg.scale.x = LEG_VOLUME;
         backLeftLeg.scale.y = LEG_HEIGHT;
         backLeftLeg.scale.z /= BODY_LENGTH * 2;
 
