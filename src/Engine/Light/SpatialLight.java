@@ -40,32 +40,26 @@ public class SpatialLight extends Light implements ISpatialObject {
 
     /**
      *
-     * @return color buffer for glLight(GL_LIGHT, GL_XXXX, buffer) where XXXX can be GL_AMBIENT, GL_SPECULAR, GL_DIFFUSE
-     */
-    public FloatBuffer getColorFloatBuffer() {
-        float red = color.getRed() / 255f;
-        float green = color.getGreen() / 255f;
-        float blue = color.getBlue() / 255f;
-        float alpha = color.getAlpha() / 255f;
-
-        red *= intensity;
-        green *= intensity;
-        blue *= intensity;
-        alpha *= intensity;
-
-        FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(4).put(new float[]{red, green, blue, alpha});
-        floatBuffer.rewind();
-        return floatBuffer;
-    }
-
-    /**
-     *
      * @return positional buffer for glLight(GL_LIGHTX, GL_POSITION, buffer)
      */
     public FloatBuffer getPositionFloatBuffer() {
         FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(4).put(new float[]{position.x, position.y, position.z, position.w});
         floatBuffer.rewind();
         return floatBuffer;
+    }
+
+    @Override
+    public void update() {
+        if(updateNeeded == false)
+            return;
+
+        glLight(LIGHT_X, GL_POSITION, getPositionFloatBuffer());
+        if(toRender == false)
+            glDisable(LIGHT_X);
+        else
+            glEnable(LIGHT_X);
+
+        super.update();
     }
 
     @Override

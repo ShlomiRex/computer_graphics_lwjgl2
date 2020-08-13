@@ -41,8 +41,6 @@ public class GUIWindow {
         window.add(panel);
 
         initPanel_CameraSelect();
-        initPanel_Help();
-
         jpanel_ambientLight = new AmbientPanel();
         panel.add(jpanel_ambientLight);
 
@@ -54,24 +52,7 @@ public class GUIWindow {
 
         jpanel_bottomControl = new BottomPanel();
         panel.add(jpanel_bottomControl);
-    }
 
-    private void initPanel_Help() {
-        jpanel_help = new JPanel();
-        JButton btn_help = new JButton("Help");
-        btn_help.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String message = "";
-                message += "Controls\n\n1)W - Move forward\n2)S - Move backward\n3)A - Move left\n4)D - Move right";
-                message += "\n5)Z - Move down\n6)X - Move up";
-                message += "\n\nTo rotate, press Right Engine.Input.Mouse and drag";
-                JOptionPane.showMessageDialog(null, message);
-            }
-        });
-        jpanel_help.add(btn_help);
-
-        panel.add(jpanel_help);
     }
 
     //Camera: External or Dog view

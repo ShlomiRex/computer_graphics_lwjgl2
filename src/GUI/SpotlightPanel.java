@@ -11,6 +11,7 @@ public class SpotlightPanel extends JPanel {
     public static Color spotlightColor = Color.WHITE;
     public static Runnable runnable_spotLight_color; //When user changes spotlight color
     public static SliderControlPanel spotlight_direction_panel;
+    public static Runnable runnable_spotLight_enabled;
 
     public SpotlightPanel() {
         setBorder(BorderFactory.createTitledBorder("Spotlight"));
@@ -19,10 +20,11 @@ public class SpotlightPanel extends JPanel {
         checkBox_enable.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                spotlight_enabled = checkBox_enable.isEnabled();
-                runnable_spotLight_color.run();
+                spotlight_enabled = checkBox_enable.isSelected();
+                runnable_spotLight_enabled.run();
             }
         });
+        checkBox_enable.setSelected(true);
         add(checkBox_enable);
 
         JButton btnColor = new JButton("Color");

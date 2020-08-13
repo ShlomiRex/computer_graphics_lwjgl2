@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import java.nio.FloatBuffer;
 
-import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Spotlight extends SpatialLight {
 
@@ -31,12 +31,35 @@ public class Spotlight extends SpatialLight {
     }
 
     public FloatBuffer getDirectionFloatBuffer() {
+        /*
         float x = position.x + direction.x;
         float y = position.y + direction.y;
         float z = position.z + direction.z;
         float w = position.w; //This doesn't get changed
-        FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(4).put(new float[]{x, y, z, w});
+        */
+        float x = direction.x;
+        float y = direction.y;
+        float z = direction.z;
+
+        //We create buffer of size 4 but only 3 elements. This is ok.
+        FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(4).put(new float[]{x, y, z});
         floatBuffer.rewind();
         return floatBuffer;
+    }
+
+    @Override
+    public void update() {
+        if(updateNeeded == false)
+            return;
+
+        glLight(LIGHT_X, GL_SPOT_DIRECTION, getDirectionFloatBuffer());
+        glLightf(LIGHT_X, GL_SPOT_CUTOFF, cutoff);
+
+        glLightf(LIGHT_X, GL_SPOT_EXPONENT, exponent);
+        glLightf(LIGHT_X, GL_CONSTANT_ATTENUATION, constant_attenuation);
+        glLightf(LIGHT_X, GL_LINEAR_ATTENUATION, linear_attenuation);
+        glLightf(LIGHT_X, GL_QUADRATIC_ATTENUATION, quadratic_attenuation);
+
+        super.update();
     }
 }
