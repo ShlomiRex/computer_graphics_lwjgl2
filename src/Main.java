@@ -42,12 +42,6 @@ public class Main {
         light0_pointLight = new Pointlight(GL_LIGHT0);
         light1_spotlight = new Spotlight(GL_LIGHT1);
         light2_pointLight = new Pointlight(GL_LIGHT2);
-
-        light0_pointLight.intensity = 0.5f;
-        light0_pointLight.color = Color.BLUE;
-
-        light2_pointLight.intensity =  0.5f;
-        light2_pointLight.color = Color.RED;
     }
 
     private void run() throws LWJGLException {
@@ -59,13 +53,94 @@ public class Main {
         initKeyboard(gameWindow);
         initMouse();
         initGUIRunnables();
-        testSpotlight();
+        initLights();
 
         //run game
         gameLoop();
 
         //game loop finishes, exit
         exit();
+    }
+
+    private void initLights() {
+        //TODO: Enable / disable lights for testing
+        glEnable(GL_LIGHT0);
+        glEnable(GL_LIGHT1);
+        //glEnable(GL_LIGHT2);
+
+        //Light 0 init
+        light0_pointLight.intensity = 0.2f;
+
+        //Light 1 init
+        light1_spotlight.intensity = 1f;
+        light1_spotlight.color = Color.WHITE;
+
+        light1_spotlight.position.x = 0;
+        light1_spotlight.position.y = 15;
+        light1_spotlight.position.z = 20;
+        //light1_spotlight.position.w = 1.0f; //It is already setup as NON DIRECTIONAL
+
+        light1_spotlight.direction.x = 0;
+        light1_spotlight.direction.y = 1;
+        light1_spotlight.direction.z = -1;
+
+        light1_spotlight.exponent = 0f;
+        light1_spotlight.cutoff = 22.5f;
+        light1_spotlight.constant_attenuation = 1.0f;
+        light1_spotlight.linear_attenuation = 0f;
+        light1_spotlight.quadratic_attenuation = 0f;
+
+        glLight(light1_spotlight.LIGHT_X, GL_AMBIENT, colorToFloatBuffer(Color.WHITE));
+        glLight(light1_spotlight.LIGHT_X, GL_DIFFUSE, colorToFloatBuffer(Color.WHITE));
+        glLight(light1_spotlight.LIGHT_X, GL_SPECULAR, colorToFloatBuffer(Color.WHITE));
+
+        FloatBuffer pos = BufferUtils.createFloatBuffer(4).put(new float[]{0, 5, 0, 1});
+        FloatBuffer direction = BufferUtils.createFloatBuffer(4).put(new float[]{0, 0, -1f});
+        pos.rewind();
+        direction.rewind();
+
+        glLight(light1_spotlight.LIGHT_X, GL_POSITION, pos);
+        glLight(light1_spotlight.LIGHT_X, GL_SPOT_DIRECTION, direction);
+        glLightf(light1_spotlight.LIGHT_X, GL_SPOT_EXPONENT, light1_spotlight.exponent);
+        glLightf(light1_spotlight.LIGHT_X, GL_SPOT_CUTOFF, light1_spotlight.cutoff);
+        glLightf(light1_spotlight.LIGHT_X, GL_CONSTANT_ATTENUATION, light1_spotlight.constant_attenuation);
+        glLightf(light1_spotlight.LIGHT_X, GL_LINEAR_ATTENUATION, light1_spotlight.linear_attenuation);
+        glLightf(light1_spotlight.LIGHT_X, GL_QUADRATIC_ATTENUATION, light1_spotlight.quadratic_attenuation);
+
+        //Light 2 init
+        light2_pointLight.intensity =  0.5f;
+        light2_pointLight.color = Color.RED;
+
+
+        //Light 3 init
+        /*
+        int glLightID = GL_LIGHT3;
+
+        glLight(glLightID, GL_AMBIENT, colorToFloatBuffer(Color.WHITE));
+        glLight(glLightID, GL_DIFFUSE, colorToFloatBuffer(Color.WHITE));
+        glLight(glLightID, GL_SPECULAR, colorToFloatBuffer(Color.WHITE));
+
+        FloatBuffer pos = BufferUtils.createFloatBuffer(4).put(new float[]{0, 5, 0, 1});
+        FloatBuffer direction = BufferUtils.createFloatBuffer(4).put(new float[]{0, 0, -1f});
+
+        pos.rewind();
+        direction.rewind();
+
+        glLight(glLightID, GL_POSITION, pos);
+
+        glLight(glLightID, GL_SPOT_DIRECTION, direction);
+        glLightf(glLightID, GL_SPOT_EXPONENT, 0);
+        glLightf(glLightID, GL_SPOT_CUTOFF, 22.5f);
+
+        glLightf(glLightID, GL_CONSTANT_ATTENUATION, 1.0f);
+        glLightf(glLightID, GL_LINEAR_ATTENUATION, 0.0f);
+        glLightf(glLightID, GL_QUADRATIC_ATTENUATION, 0.0f);
+
+        glEnable(glLightID);
+
+        glDisable(GL_LIGHT1);
+        glDisable(GL_LIGHT2);
+         */
     }
 
     private void initGUIRunnables() {
@@ -152,35 +227,6 @@ public class Main {
         return floatBuffer;
     }
 
-    private void testSpotlight() {
-        int glLightID = GL_LIGHT3;
-
-        glLight(glLightID, GL_AMBIENT, colorToFloatBuffer(Color.WHITE));
-        glLight(glLightID, GL_DIFFUSE, colorToFloatBuffer(Color.WHITE));
-        glLight(glLightID, GL_SPECULAR, colorToFloatBuffer(Color.WHITE));
-
-        FloatBuffer pos = BufferUtils.createFloatBuffer(4).put(new float[]{0, 5, 0, 1});
-        FloatBuffer direction = BufferUtils.createFloatBuffer(4).put(new float[]{0, 0, -1f});
-
-        pos.rewind();
-        direction.rewind();
-
-        glLight(glLightID, GL_POSITION, pos);
-
-        glLight(glLightID, GL_SPOT_DIRECTION, direction);
-        glLightf(glLightID, GL_SPOT_EXPONENT, 0);
-        glLightf(glLightID, GL_SPOT_CUTOFF, 22.5f);
-
-        glLightf(glLightID, GL_CONSTANT_ATTENUATION, 1.0f);
-        glLightf(glLightID, GL_LINEAR_ATTENUATION, 0.0f);
-        glLightf(glLightID, GL_QUADRATIC_ATTENUATION, 0.0f);
-
-        glEnable(glLightID);
-
-        glDisable(GL_LIGHT1);
-        glDisable(GL_LIGHT2);
-    }
-
     //Exit gracefully.
     private void exit() {
         System.out.println("Exiting...");
@@ -231,9 +277,9 @@ public class Main {
             light1_spotlight.direction.y = SpotlightPanel.spotlight_direction_panel.slider2_value;
             light1_spotlight.direction.z = SpotlightPanel.spotlight_direction_panel.slider3_value;
         }
-        glLight(GL_LIGHT1, GL_SPOT_DIRECTION, light1_spotlight.getDirectionFloatBuffer());
+        //glLight(GL_LIGHT1, GL_SPOT_DIRECTION, light1_spotlight.getDirectionFloatBuffer());
 
-        updateLight(light2_pointLight);
+        //updateLight(light2_pointLight);
     }
 
     private void updateLight(SpatialLight light) {

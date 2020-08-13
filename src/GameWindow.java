@@ -37,14 +37,6 @@ public class GameWindow {
         Display.create();
 
         initOpenGL();
-        initLights();
-    }
-
-    private void initLights() {
-        //TODO: Enable / disable lights for testing
-        glEnable(GL_LIGHT0);
-        //glEnable(GL_LIGHT1);
-        glEnable(GL_LIGHT2);
     }
 
     private void initOpenGL() {
