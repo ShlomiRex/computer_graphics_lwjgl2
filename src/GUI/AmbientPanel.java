@@ -9,12 +9,12 @@ import java.awt.event.ActionListener;
 
 public class AmbientPanel extends JPanel {
     public static Runnable runnable_ambientLight_intensity;
-    public static int ambientLightIntensity; //Value is between 0 and 100. You can do mod math to get between 0 and 1.
+    public static float ambientLightIntensity; //Value is between 0 and 1.
     public static Runnable runnable_ambientLight_color; //When user changes ambient color
     public static Color ambientLightColor = Color.WHITE;
 
     public AmbientPanel() {
-        setBorder(BorderFactory.createTitledBorder("Ambient Engine.Light"));
+        setBorder(BorderFactory.createTitledBorder("Ambient Intensity"));
 
         //Slider
         int min = 0;
@@ -24,14 +24,14 @@ public class AmbientPanel extends JPanel {
         jSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                AmbientPanel.ambientLightIntensity = jSlider.getValue();
-                AmbientPanel.runnable_ambientLight_intensity.run();
+                ambientLightIntensity = jSlider.getValue() / 100f;
+                runnable_ambientLight_intensity.run();
             }
         });
         add(jSlider);
         //Turn on labels at major tick marks.
-        jSlider.setMajorTickSpacing(10);
-        jSlider.setMinorTickSpacing(1);
+        jSlider.setMajorTickSpacing(100);
+        jSlider.setMinorTickSpacing(10);
         jSlider.setPaintTicks(true);
         jSlider.setPaintLabels(true);
 
@@ -41,8 +41,11 @@ public class AmbientPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Color newColor = JColorChooser.showDialog(null, "Choose ambient light color", Color.WHITE);
-                AmbientPanel.ambientLightColor = newColor;
-                AmbientPanel.runnable_ambientLight_color.run();
+                //If user didn't pick color.
+                if(newColor != null) {
+                    ambientLightColor = newColor;
+                    runnable_ambientLight_color.run();
+                }
             }
         });
         add(btnColor);

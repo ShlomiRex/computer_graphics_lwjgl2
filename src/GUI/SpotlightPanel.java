@@ -41,8 +41,10 @@ public class SpotlightPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Color newColor = JColorChooser.showDialog(null, "Choose spotlight color", Color.WHITE);
-                spotlightColor = newColor;
-                runnable_spotLight_color.run();
+                if(newColor != null) {
+                    spotlightColor = newColor;
+                    runnable_spotLight_color.run();
+                }
             }
         });
         add(btnColor);

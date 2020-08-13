@@ -31,8 +31,10 @@ public class PointLightPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Color newColor = JColorChooser.showDialog(null, "Choose point light color", Color.WHITE);
-                pointLightColor = newColor;
-                runnable_pointLight_color.run();
+                if(newColor != null) {
+                    pointLightColor = newColor;
+                    runnable_pointLight_color.run();
+                }
             }
         });
         add(btnColor);

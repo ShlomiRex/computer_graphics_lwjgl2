@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Light implements IStateObject {
 
-    public static final Vector3f DEFAULT_AMBIENT = new Vector3f(0.5f, 0.5f, 0.5f);
+    public static final Vector3f DEFAULT_AMBIENT = new Vector3f(0f, 0f, 0f);
 
 
     /**

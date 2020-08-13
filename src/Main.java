@@ -107,7 +107,7 @@ public class Main {
         };
 
         AmbientPanel.runnable_ambientLight_intensity = () -> {
-            light0_pointLight.intensity = AmbientPanel.ambientLightIntensity / 100f; //[0, 100] range to [0, 1] for float.
+            light0_pointLight.intensity = AmbientPanel.ambientLightIntensity;
             light0_pointLight.updateNeeded = true;
         };
 
