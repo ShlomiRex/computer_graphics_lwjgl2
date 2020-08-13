@@ -156,6 +156,9 @@ public class OBJLoader extends Object {
                     case "s":
                         model.setSmoothShadingEnabled(!ln.contains("off"));
                         break;
+                    case "o":
+                        //Ignore
+                        break;
                     default:
                         System.err.println("[OBJ] Unknown Line: " + ln);
                 }
