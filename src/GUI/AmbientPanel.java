@@ -13,8 +13,22 @@ public class AmbientPanel extends JPanel {
     public static Runnable runnable_ambientLight_color; //When user changes ambient color
     public static Color ambientLightColor = Color.WHITE;
 
+    public static Runnable runnable_light_enable; //When user changes point light enable/disable
+    public static boolean pointLight_enabled;
+
     public AmbientPanel() {
         setBorder(BorderFactory.createTitledBorder("Ambient Intensity"));
+
+        JCheckBox checkBox_enable = new JCheckBox("Enable");
+        checkBox_enable.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pointLight_enabled = checkBox_enable.isSelected();
+                runnable_light_enable.run();
+            }
+        });
+        checkBox_enable.setSelected(true);
+        add(checkBox_enable);
 
         //Slider
         int min = 0;

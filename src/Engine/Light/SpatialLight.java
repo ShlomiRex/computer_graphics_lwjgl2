@@ -16,10 +16,17 @@ public class SpatialLight extends Light implements ISpatialObject {
      * Spatial position in space of light.
      */
     public Vector4f position; //Last element is 'w' which is 'directional light' or not.
+
     /**
      * When true, this object will not be rendered.
      */
-    public boolean toRender;
+    public boolean toRender = true;
+
+    /**
+     * When this is false, disable light.
+     */
+    public boolean enabled = true;
+
     /**
      * The rendered spatial object of this light.
      */
@@ -29,7 +36,6 @@ public class SpatialLight extends Light implements ISpatialObject {
         super(light_number);
         position = new Vector4f(0, 0, 0, is_directional ? 0 : 1);
         renderObject = new Sphere();
-        toRender = true;
 
         renderObject.name = "Light " + ((light_number / GL_LIGHT0) - 1);
 
@@ -54,7 +60,8 @@ public class SpatialLight extends Light implements ISpatialObject {
             return;
 
         glLight(LIGHT_X, GL_POSITION, getPositionFloatBuffer());
-        if(toRender == false)
+
+        if(enabled == false)
             glDisable(LIGHT_X);
         else
             glEnable(LIGHT_X);

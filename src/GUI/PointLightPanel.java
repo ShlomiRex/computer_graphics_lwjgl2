@@ -11,9 +11,11 @@ public class PointLightPanel extends JPanel {
     public static Color pointLightColor = Color.WHITE;
     public static Runnable runnable_pointLight_enable; //When user changes point light enable/disable
     public static Runnable runnable_pointLight_color; //When user changes point light color
+    public static PositionControlPanel positionControlPanel;
 
-    public PointLightPanel() {
-        setBorder(BorderFactory.createTitledBorder("Point Engine.Light"));
+    public PointLightPanel(JFrame parent) {
+        positionControlPanel = new PositionControlPanel();
+        setBorder(BorderFactory.createTitledBorder("Point Light"));
 
         JCheckBox checkBox_enable = new JCheckBox("Enable");
         checkBox_enable.addActionListener(new ActionListener() {
@@ -39,6 +41,17 @@ public class PointLightPanel extends JPanel {
         });
         add(btnColor);
 
-
+        JButton jButton_position = new JButton("Position");
+        jButton_position.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame jFrame = new JFrame("Position");
+                jFrame.setLocationRelativeTo(parent);
+                jFrame.add(positionControlPanel);
+                jFrame.pack();
+                jFrame.setVisible(true);
+            }
+        });
+        add(jButton_position);
     }
 }

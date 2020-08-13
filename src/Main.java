@@ -26,7 +26,7 @@ public class Main {
     private Camera camera;
 
     private Pointlight light0_pointLight; //Main scene light (global)
-    private Spotlight light1_spotlight;
+    private Spotlight light1_spotlight; //Spotlight
     private Pointlight light2_pointLight; //Secondary light
 
     public Main() {
@@ -61,13 +61,9 @@ public class Main {
     }
 
     private void initLights() {
-        //TODO: Enable / disable lights for testing
-        //glEnable(GL_LIGHT0);
-        glEnable(GL_LIGHT1);
-        //glEnable(GL_LIGHT2);
-
         //Light 0 init
         light0_pointLight.intensity = 0.2f;
+        light0_pointLight.toRender = false;
 
         //Light 1 init
         light1_spotlight.intensity = 1f;
@@ -100,7 +96,7 @@ public class Main {
     }
 
     private void initGUIStuff() {
-        //Light 0
+        //Light 0 - ambient (global)
         AmbientPanel.runnable_ambientLight_color = () -> {
             light0_pointLight.color = AmbientPanel.ambientLightColor;
             light0_pointLight.updateNeeded = true;
@@ -108,6 +104,13 @@ public class Main {
 
         AmbientPanel.runnable_ambientLight_intensity = () -> {
             light0_pointLight.intensity = AmbientPanel.ambientLightIntensity;
+            light0_pointLight.updateNeeded = true;
+        };
+
+        AmbientPanel.runnable_light_enable = () -> {
+            light0_pointLight.enabled = AmbientPanel.pointLight_enabled;
+            light0_pointLight.toRender = AmbientPanel.pointLight_enabled;
+
             light0_pointLight.updateNeeded = true;
         };
 
@@ -119,6 +122,7 @@ public class Main {
 
         SpotlightPanel.runnable_spotLight_enabled = () -> {
             light1_spotlight.toRender = SpotlightPanel.spotlight_enabled;
+            light1_spotlight.enabled = SpotlightPanel.spotlight_enabled;
             light1_spotlight.updateNeeded = true;
         };
 
@@ -148,11 +152,20 @@ public class Main {
         //Light 2
         PointLightPanel.runnable_pointLight_enable = () -> {
             light2_pointLight.toRender = PointLightPanel.pointLight_enabled;
+            light2_pointLight.enabled = PointLightPanel.pointLight_enabled;
             light2_pointLight.updateNeeded = true;
         };
 
         PointLightPanel.runnable_pointLight_color = () -> {
             light2_pointLight.color = PointLightPanel.pointLightColor;
+            light2_pointLight.updateNeeded = true;
+        };
+
+        PointLightPanel.positionControlPanel.runnable_when_position_value_changed_in_gui = () -> {
+            light2_pointLight.position.x = PointLightPanel.positionControlPanel.xAxis.getValue();
+            light2_pointLight.position.y = PointLightPanel.positionControlPanel.yAxis.getValue();
+            light2_pointLight.position.z = PointLightPanel.positionControlPanel.zAxis.getValue();
+
             light2_pointLight.updateNeeded = true;
         };
     }
@@ -218,7 +231,11 @@ public class Main {
     private void exit() {
         System.out.println("Exiting...");
         guiWindow.exit();
-        Display.destroy();
+        try {
+            Display.destroy();
+        } catch (IllegalStateException e) {
+
+        }
         System.exit(0);
     }
 

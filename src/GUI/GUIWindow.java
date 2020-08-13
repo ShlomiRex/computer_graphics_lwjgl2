@@ -38,13 +38,13 @@ public class GUIWindow extends JFrame {
         jpanel_ambientLight = new AmbientPanel();
         add(jpanel_ambientLight);
 
-        jpanel_pointLight = new PointLightPanel();
+        jpanel_pointLight = new PointLightPanel(this);
         add(jpanel_pointLight);
 
         jpanel_spotlight = new SpotlightPanel(this);
         add(jpanel_spotlight);
 
-        jpanel_bottomControl = new BottomPanel();
+        jpanel_bottomControl = new BottomPanel(this);
         add(jpanel_bottomControl);
 
     }
