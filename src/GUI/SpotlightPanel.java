@@ -47,7 +47,7 @@ public class SpotlightPanel extends JPanel {
         //Slider
         int min2 = 0;
         int max2 = 100;
-        int value = max/2;
+        int value = max2/2;
         float abs = Math.abs(min2) + Math.abs(max2);
         JSlider jSlider = new JSlider(min2, max2, value);
         jSlider.addChangeListener(new ChangeListener() {

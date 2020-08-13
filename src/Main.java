@@ -174,6 +174,12 @@ public class Main {
 
             light2_pointLight.updateNeeded = true;
         };
+
+        PointLightPanel.runnable_intensity_changed = () -> {
+            light2_pointLight.intensity = PointLightPanel.pointLight_intensity;
+
+            light2_pointLight.updateNeeded = true;
+        };
     }
 
     private void initMouse() {
