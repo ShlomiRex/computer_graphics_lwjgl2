@@ -15,6 +15,11 @@ public class SpotlightPanel extends JPanel {
 
     public SpotlightPanel() {
         setBorder(BorderFactory.createTitledBorder("Spotlight"));
+        spotlight_direction_panel = new SliderControlPanel(true);
+        spotlight_direction_panel.jSlider1.setValue(0); //0*50
+        spotlight_direction_panel.jSlider2.setValue(0); //0*50
+        spotlight_direction_panel.jSlider3.setValue(-50); //-1*50
+        spotlight_direction_panel.jSlider4.setValue(50); //1*50
 
         JCheckBox checkBox_enable = new JCheckBox("Enable");
         checkBox_enable.addActionListener(new ActionListener() {
@@ -44,7 +49,6 @@ public class SpotlightPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame jFrame = new JFrame("Direction control");
-                spotlight_direction_panel = new SliderControlPanel(); //We create each time because to reset x,y,z,w
                 jFrame.add(spotlight_direction_panel);
                 jFrame.setVisible(true);
                 jFrame.pack();

@@ -6,43 +6,72 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class SliderControlPanel extends JPanel {
-    public float slider1_value, slider2_value, slider3_value, slider4_value;
 
-    public SliderControlPanel() {
+    public float slider1_value, slider2_value, slider3_value, slider4_value;
+    public Runnable runnable_valueChanged;
+
+    protected JSlider jSlider1, jSlider2, jSlider3, jSlider4;
+
+    /**
+     *
+     * @param four_elements If you want 3 sliders, set this false. Otherwise, set this true and you will get 4 sliders.
+     */
+    public SliderControlPanel(boolean four_elements) {
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        int min = 0;
-        int max = 100;
+        int min = -50;
+        int max = 50;
         int value = max/2;
 
-        JSlider jSlider1 = new JSlider(min, max, value);
+        jSlider1 = new JSlider(min, max, value);
         jSlider1.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 slider1_value = jSlider1.getValue() / 100f;
+                try {
+                    runnable_valueChanged.run();
+                } catch (NullPointerException ex) {
+                    //In SpotlightPanel we set value of sliders before the game even begins. Ignore errors.
+                }
             }
         });
 
-        JSlider jSlider2 = new JSlider(min, max, value);
+        jSlider2 = new JSlider(min, max, value);
         jSlider2.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 slider2_value = jSlider2.getValue() / 100f;
+                try {
+                    runnable_valueChanged.run();
+                } catch (NullPointerException ex) {
+                    //In SpotlightPanel we set value of sliders before the game even begins. Ignore errors.
+                }
             }
         });
 
-        JSlider jSlider3 = new JSlider(min, max, value);
+        jSlider3 = new JSlider(min, max, value);
         jSlider3.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 slider3_value = jSlider3.getValue() / 100f;
+                try {
+                    runnable_valueChanged.run();
+                } catch (NullPointerException ex) {
+                    //In SpotlightPanel we set value of sliders before the game even begins. Ignore errors.
+                }
             }
         });
 
-        JSlider jSlider4 = new JSlider(min, max, value);
+        jSlider4 = new JSlider(min, max, value);
         jSlider4.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 slider4_value = jSlider4.getValue() / 100f;
+                try {
+                    runnable_valueChanged.run();
+                } catch (NullPointerException ex) {
+                    //In SpotlightPanel we set value of sliders before the game even begins. Ignore errors.
+                }
             }
         });
 
@@ -66,5 +95,9 @@ public class SliderControlPanel extends JPanel {
         add(yPanel);
         add(zPanel);
         add(wPanel);
+
+        //Hide w panel.
+        if(four_elements)
+            wPanel.setVisible(false);
     }
 }

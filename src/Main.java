@@ -124,9 +124,22 @@ public class Main {
             light1_spotlight.updateNeeded = true;
         };
 
+        SpotlightPanel.spotlight_direction_panel.runnable_valueChanged = () -> {
+            light1_spotlight.direction.x = SpotlightPanel.spotlight_direction_panel.slider1_value;
+            light1_spotlight.direction.y = SpotlightPanel.spotlight_direction_panel.slider2_value;
+            light1_spotlight.direction.z = SpotlightPanel.spotlight_direction_panel.slider3_value;
+
+            light1_spotlight.updateNeeded = true;
+        };
+
         //Light 2
         PointLightPanel.runnable_pointLight_enable = () -> {
             light2_pointLight.toRender = PointLightPanel.pointLight_enabled;
+            light2_pointLight.updateNeeded = true;
+        };
+
+        PointLightPanel.runnable_pointLight_color = () -> {
+            light2_pointLight.color = PointLightPanel.pointLightColor;
             light2_pointLight.updateNeeded = true;
         };
     }
