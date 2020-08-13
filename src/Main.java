@@ -10,6 +10,7 @@ import GUI.PointLightPanel;
 import GUI.SpotlightPanel;
 import Scene.Dog.Dog;
 import Scene.House;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.glu.GLU;
@@ -58,6 +59,7 @@ public class Main {
         initKeyboard(gameWindow);
         initMouse();
         initGUIRunnables();
+        testSpotlight();
 
         //run game
         gameLoop();
@@ -137,6 +139,46 @@ public class Main {
         Keyboard.key_p = () -> {
             light1_spotlight.position.y -= 0.01f;
         };
+    }
+
+    private static FloatBuffer colorToFloatBuffer(Color color) {
+        float red = color.getRed() / 255;
+        float green = color.getGreen() / 255;
+        float blue = color.getBlue() / 255;
+        float alpha = 1f;
+        FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(4).put(new float[]{red, green, blue, alpha});
+        floatBuffer.rewind();
+
+        return floatBuffer;
+    }
+
+    private void testSpotlight() {
+        int glLightID = GL_LIGHT3;
+
+        glLight(glLightID, GL_AMBIENT, colorToFloatBuffer(Color.WHITE));
+        glLight(glLightID, GL_DIFFUSE, colorToFloatBuffer(Color.WHITE));
+        glLight(glLightID, GL_SPECULAR, colorToFloatBuffer(Color.WHITE));
+
+        FloatBuffer pos = BufferUtils.createFloatBuffer(4).put(new float[]{0, 5, 0, 1});
+        FloatBuffer direction = BufferUtils.createFloatBuffer(4).put(new float[]{0, 0, -1f});
+
+        pos.rewind();
+        direction.rewind();
+
+        glLight(glLightID, GL_POSITION, pos);
+
+        glLight(glLightID, GL_SPOT_DIRECTION, direction);
+        glLightf(glLightID, GL_SPOT_EXPONENT, 0);
+        glLightf(glLightID, GL_SPOT_CUTOFF, 22.5f);
+
+        glLightf(glLightID, GL_CONSTANT_ATTENUATION, 1.0f);
+        glLightf(glLightID, GL_LINEAR_ATTENUATION, 0.0f);
+        glLightf(glLightID, GL_QUADRATIC_ATTENUATION, 0.0f);
+
+        glEnable(glLightID);
+
+        glDisable(GL_LIGHT1);
+        glDisable(GL_LIGHT2);
     }
 
     //Exit gracefully.

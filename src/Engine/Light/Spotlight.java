@@ -10,10 +10,21 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 public class Spotlight extends SpatialLight {
 
     public Vector3f direction;
+    public float cutoff, outerCutoff;
+
+    /**
+     * Attenuation.
+     */
+    public float constant, linear, quadratic;
 
     public Spotlight(int light_number) {
-        super(light_number, true);
+        super(light_number, false);
         direction = new Vector3f(0, 0, -1);
+
+        cutoff = 40f;
+        outerCutoff = 50f;
+
+
     }
 
     public FloatBuffer getDirectionFloatBuffer() {
