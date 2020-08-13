@@ -148,6 +148,12 @@ public class Main {
             light1_spotlight.updateNeeded = true;
         };
 
+        SpotlightPanel.runnable_intensity_changed = () -> {
+            light1_spotlight.intensity = SpotlightPanel.spotlight_intensity;
+
+            light1_spotlight.updateNeeded = true;
+        };
+
 
         //Light 2
         PointLightPanel.runnable_pointLight_enable = () -> {
