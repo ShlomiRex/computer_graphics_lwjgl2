@@ -3,7 +3,6 @@ package Engine.EngineObject;
 
 import Engine.Light.Light;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
 
 import static org.lwjgl.opengl.GL11.glColor3f;
 
@@ -14,12 +13,14 @@ public class Sphere extends SpatialObject {
     public float radius;
     int slices, stacks;
 
-    public Sphere() {
+    public Sphere(SpatialObject parent, String name) {
+        super(parent, name);
         sphere = new org.lwjgl.util.glu.Sphere();
         radius = 1f;
         slices = 10;
         stacks = 10;
     }
+
 
     @Override
     public void render() {

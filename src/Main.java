@@ -23,7 +23,10 @@ public class Main {
     private GameWindow gameWindow;
     private Dog dog;
     private House house;
-    private Camera camera;
+
+    private Camera mainCamera;
+    private Camera externalCamera;
+    private Camera dogCamera;
 
     private Pointlight light0_pointLight; //Main scene light (global)
     private Spotlight light1_spotlight; //Spotlight
@@ -32,10 +35,16 @@ public class Main {
     public Main() {
         guiWindow = new GUIWindow("Controls");
         gameWindow = new GameWindow("My Game", 1280, 720);
-        camera = new Camera();
 
         dog = new Dog();
         house = new House();
+
+        externalCamera = new Camera(null, "External Camera");
+        externalCamera.name = "External Camera";
+        dogCamera = new Camera(dog.head, "Dog Camera");
+        dogCamera.name = "Dog Camera";
+        //dogCamera.direction.z = 1;
+        mainCamera = externalCamera;
 
         light0_pointLight = new Pointlight(GL_LIGHT0);
         light1_spotlight = new Spotlight(GL_LIGHT1);
@@ -49,7 +58,7 @@ public class Main {
         //init
         gameWindow.init();
         initKeyboard();
-        initMouse();
+        Mouse.init(mainCamera);
         initLights();
         initGUIStuff();
 
@@ -96,6 +105,18 @@ public class Main {
     }
 
     private void initGUIStuff() {
+        GUIWindow.runnable_camera_external = () -> {
+            mainCamera = externalCamera;
+            //Update camera pointer to mainCamera (new ObjectID)
+            Mouse.camera = mainCamera;
+        };
+
+        GUIWindow.runnable_camera_dog = () -> {
+            mainCamera = dogCamera;
+            //Update camera pointer to mainCamera (new ObjectID)
+            Mouse.camera = mainCamera;
+        };
+
         //Light 0 - ambient (global)
         AmbientPanel.runnable_ambientLight_color = () -> {
             light0_pointLight.color = AmbientPanel.ambientLightColor;
@@ -182,34 +203,30 @@ public class Main {
         };
     }
 
-    private void initMouse() {
-        Mouse.init(camera);
-    }
-
     private void initKeyboard() {
 
         Runnable move_forward = () -> {
-            camera.moveForward();
+            mainCamera.moveForward();
         };
 
         Runnable move_backward = () -> {
-            camera.moveBackward();
+            mainCamera.moveBackward();
         };
 
         Runnable move_left = () -> {
-            camera.moveLeft();
+            mainCamera.moveLeft();
         };
 
         Runnable  move_right = () -> {
-            camera.moveRight();
+            mainCamera.moveRight();
         };
 
         Runnable move_up = () -> {
-            camera.moveUp();
+            mainCamera.moveUp();
         };
 
         Runnable move_down = () -> {
-            camera.moveDown();
+            mainCamera.moveDown();
         };
 
         Keyboard.init(move_forward, move_backward, move_left, move_right, move_up, move_down);
@@ -262,10 +279,14 @@ public class Main {
 
             //direction vector default is 0,0,-1 and up vector default is 0,1,0
             GLU.gluLookAt(
-                    camera.position.x, camera.position.y, camera.position.z,
-                    camera.direction.x, camera.direction.y, camera.direction.z,
-                    camera.up.x, camera.up.y, camera.up.z
+                    mainCamera.getAbsoluteWorldPosition().x, mainCamera.getAbsoluteWorldPosition().y, mainCamera.getAbsoluteWorldPosition().z,
+                    mainCamera.getAbsoluteDirection().x, mainCamera.getAbsoluteDirection().y, mainCamera.getAbsoluteDirection().z,
+                    mainCamera.up.x, mainCamera.up.y, mainCamera.up.z
             );
+
+//            System.out.println("Position: " + mainCamera.position);
+//            System.out.println("Direction: " + mainCamera.direction);
+//            System.out.println("Up: " + mainCamera.up + "\n");
 
             //Read keyboard
             Keyboard.pollKeys();
@@ -280,7 +301,6 @@ public class Main {
 
             render();
             Display.update();
-            glFlush();
         }
     }
 

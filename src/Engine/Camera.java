@@ -12,8 +12,9 @@ public class Camera extends SpatialObject  {
     public float move_speed;
     public float xz_angle, y_angle;
 
-    public Camera() {
-        position = new Vector3f(0, 0, 0);
+    public Camera(SpatialObject parent, String name) {
+        super(parent, name);
+        position = new Vector3f();
         direction = new Vector3f(0, 0, -1);
         up = new Vector3f(0, 1, 0);
 
@@ -144,5 +145,14 @@ public class Camera extends SpatialObject  {
     public void moveDown() {
         position.y -= move_speed;
         direction.y -= move_speed;
+    }
+
+    public Vector3f getAbsoluteDirection() {
+        Vector3f res = new Vector3f(direction.x, direction.y, direction.z);
+        Vector3f pos = getAbsoluteWorldPosition();
+        res.x += pos.x;
+        res.y += pos.y;
+        res.z += pos.z;
+        return res;
     }
 }

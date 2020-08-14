@@ -12,26 +12,28 @@ public class House extends SpatialObject {
     private Cube floor, backWall, leftWall, rightWall;
 
     public House() {
-        floor = new Cube();
+        super(null, "House Class");
+        this.name = "House";
+        floor = new Cube(this, "Floor Cube");
         floor.scale.x = WALL_LENGTH;
         floor.scale.y = WALL_THICKNESS;
         floor.scale.z = WALL_LENGTH;
 
-        backWall = new Cube();
+        backWall = new Cube(this, "Back Wall Cube");
         backWall.scale.x = WALL_LENGTH;
         backWall.scale.y = CEILING_HEIGHT;
         backWall.scale.z = WALL_THICKNESS;
         backWall.position.z -= WALL_LENGTH;
         backWall.position.y += CEILING_HEIGHT;
 
-        leftWall = new Cube();
+        leftWall = new Cube(this, "Left Wall Cube");
         leftWall.scale.x = WALL_THICKNESS;
         leftWall.scale.y = CEILING_HEIGHT;
         leftWall.scale.z = WALL_LENGTH;
         leftWall.position.x -= WALL_LENGTH;
         leftWall.position.y += CEILING_HEIGHT;
 
-        rightWall = new Cube();
+        rightWall = new Cube(this, "Right Wall Cube");
         rightWall.scale.x = WALL_THICKNESS;
         rightWall.scale.y = CEILING_HEIGHT;
         rightWall.scale.z = WALL_LENGTH;

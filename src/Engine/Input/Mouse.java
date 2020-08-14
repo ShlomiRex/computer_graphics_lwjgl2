@@ -13,7 +13,7 @@ public class Mouse {
     private static int lastButton;
 
 
-    private static Camera camera;
+    public static Camera camera;
 
     private static final float ROTATE_AMOUNT = 0.2f; //Degrees to turn each update if mouse is dragged (multiplied by delta mouse)
 

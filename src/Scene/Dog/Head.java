@@ -8,14 +8,15 @@ public class Head extends SpatialObject {
 
     //Spatial objects.
 
-    private Sphere head;
+    public Sphere head;
     private Cube leftEye;
     private Cube rightEye;
 
-    public Head() {
-        head = new Sphere();
-        leftEye = new Cube();
-        rightEye = new Cube();
+    public Head(SpatialObject parent) {
+        super(parent, "Head Class");
+        head = new Sphere(this, "Head Sphere");
+        leftEye = new Cube(head, "Left Eye Cube");
+        rightEye = new Cube(head, "Right Eye Cube");
 
         //Move head to correct position relative to Dog SpatialObject.
         position.x = 0f;

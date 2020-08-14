@@ -35,7 +35,7 @@ public class SpatialLight extends Light implements ISpatialObject {
     public SpatialLight(int light_number, boolean is_directional) {
         super(light_number);
         position = new Vector4f(0, 0, 0, is_directional ? 0 : 1);
-        renderObject = new Sphere();
+        renderObject = new Sphere(null, "Spatial Render Object");
 
         renderObject.name = "Light " + ((light_number / GL_LIGHT0) - 1);
 

@@ -6,7 +6,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Cube extends SpatialObject {
 
-    public Cube() {
+    public Cube(SpatialObject parent, String name) {
+        super(parent, name);
         scale.x /= 2;
         scale.y /= 2;
         scale.z /= 2;

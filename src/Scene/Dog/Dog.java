@@ -2,17 +2,16 @@ package Scene.Dog;
 
 
 import Engine.EngineObject.SpatialObject;
-import Engine.EngineObject.Sphere;
 
 public class Dog extends SpatialObject {
 
-    private Head head;
-    private Body body;
+    public Head head;
+    public Body body;
 
     public Dog() {
-        this.name = "Dog";
-        head = new Head();
-        body = new Body();
+        super(null, "Dog Class");
+        head = new Head(this);
+        body = new Body(this);
 
 
         //Render them both

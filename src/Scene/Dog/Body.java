@@ -16,12 +16,13 @@ public class Body extends SpatialObject {
     private final float LEG_Y_OFFSET = 1f;
     private final float LEG_Z_OFFSET = 0.5f;
 
-    public Body() {
-        body = new Sphere();
-        backLeftLeg = new Sphere();
-        backRightLeg = new Sphere();
-        frontLeftLeg = new Sphere();
-        frontRightLeg = new Sphere();
+    public Body(SpatialObject parent) {
+        super(parent, "Dog Body Class");
+        body = new Sphere(this, "Body Sphere");
+        backLeftLeg = new Sphere(body, "Back Left Leg");
+        backRightLeg = new Sphere(body, "Back Right Leg");
+        frontLeftLeg = new Sphere(body, "Front Left Leg");
+        frontRightLeg = new Sphere(body, "Front Right Leg");
 
 
         body.scale.z = BODY_LENGTH;
