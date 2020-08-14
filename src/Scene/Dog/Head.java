@@ -3,13 +3,15 @@ package Scene.Dog;
 import Engine.EngineObject.Cube;
 import Engine.EngineObject.SpatialObject;
 import Engine.EngineObject.Sphere;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 public class Head extends SpatialObject {
 
     //Spatial objects.
-
+    private int headRotationY = 0;
+    private int headRotationX = 0;
     private Sphere head;
 
     public Head(Vector4f color) {
@@ -79,5 +81,29 @@ public class Head extends SpatialObject {
         Vector4f eyeColor = new Vector4f(0, 0, 0, 1);
         leftEye.setColor(eyeColor);
         rightEye.setColor(eyeColor);
+    }
+
+    @Override
+    public void renderAfter() {
+        GL11.glTranslatef(0, -position.y, 0);
+        GL11.glRotatef(headRotationY, 0, 1, 0);
+        GL11.glRotatef(headRotationX, 1, 0, 0);
+        GL11.glTranslatef(0, position.y, 0);
+    }
+
+    public int getHeadRotationX() {
+        return headRotationX;
+    }
+
+    public void setHeadRotationX(int headRotationX) {
+        this.headRotationX = headRotationX;
+    }
+
+    public int getHeadRotationY() {
+        return headRotationY;
+    }
+
+    public void setHeadRotationY(int headRotationY) {
+        this.headRotationY = headRotationY;
     }
 }

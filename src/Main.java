@@ -21,7 +21,6 @@ public class Main {
 
     private GUIWindow guiWindow;
     private GameWindow gameWindow;
-    private Dog dog;
     private House house;
     private Camera camera;
 
@@ -34,7 +33,6 @@ public class Main {
         gameWindow = new GameWindow("My Game", 1280, 720);
         camera = new Camera();
 
-        dog = new Dog();
         house = new House();
 
         light0_pointLight = new Pointlight(GL_LIGHT0);
@@ -85,7 +83,7 @@ public class Main {
         light1_spotlight.quadratic_attenuation = 0f;
 
         //Light 2 init
-        light2_pointLight.intensity =  0.5f;
+        light2_pointLight.intensity = 0.5f;
         light2_pointLight.color = Color.RED;
 
 
@@ -200,7 +198,7 @@ public class Main {
             camera.moveLeft();
         };
 
-        Runnable  move_right = () -> {
+        Runnable move_right = () -> {
             camera.moveRight();
         };
 
@@ -236,6 +234,22 @@ public class Main {
 
         Keyboard.key_p = () -> {
             light1_spotlight.position.y -= 0.01f;
+        };
+
+        Keyboard.dog_head_rotate_clockwise = () -> {
+            house.dog.update(Dog.DogMovement.HEAD_LEFT.name());
+        };
+
+        Keyboard.dog_head_rotate_cclockwise = () -> {
+            house.dog.update(Dog.DogMovement.HEAD_RIGHT.name());
+        };
+
+        Keyboard.dog_head_rotate_up = () -> {
+            house.dog.update(Dog.DogMovement.HEAD_UP.name());
+        };
+
+        Keyboard.dog_head_rotate_down = () -> {
+            house.dog.update(Dog.DogMovement.HEAD_DOWN.name());
         };
     }
 

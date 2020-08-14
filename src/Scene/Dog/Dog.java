@@ -2,13 +2,17 @@ package Scene.Dog;
 
 
 import Engine.EngineObject.SpatialObject;
+import Engine.Input.ObjectInput;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-public class Dog extends SpatialObject {
+public class Dog extends SpatialObject implements ObjectInput {
 
     private Head head;
     private Body body;
+    private int yDiff = 5;
+    private int xDiff = 3;
 
     public Dog() {
         this.setName("Dog");
@@ -31,5 +35,38 @@ public class Dog extends SpatialObject {
         //Render them both
         addChildren(head);
         addChildren(body);
+    }
+
+    @Override
+    public void update(String action) {
+        int headRotationY = this.head.getHeadRotationY();
+        int headRotationX = this.head.getHeadRotationX();
+
+        DogMovement dogMovement = DogMovement.valueOf(action);
+        if (dogMovement == DogMovement.HEAD_LEFT) {
+            if (headRotationY >= -90) {
+
+                this.head.setHeadRotationY(headRotationY - yDiff);
+            }
+        } else if (dogMovement == DogMovement.HEAD_RIGHT) {
+            if (headRotationY <= 90) {
+                this.head.setHeadRotationY(headRotationY + yDiff);
+            }
+        } else if (dogMovement == DogMovement.HEAD_DOWN) {
+            if (headRotationX <= 60) {
+                this.head.setHeadRotationX(headRotationX + xDiff);
+            }
+        } else if (dogMovement == DogMovement.HEAD_UP) {
+            if (headRotationX >= -45) {
+                this.head.setHeadRotationX(headRotationX - xDiff);
+            }
+        }
+    }
+
+    public enum DogMovement {
+        HEAD_LEFT,
+        HEAD_RIGHT,
+        HEAD_UP,
+        HEAD_DOWN
     }
 }

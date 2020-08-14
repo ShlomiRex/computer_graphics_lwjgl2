@@ -16,6 +16,8 @@ public class House extends SpatialObject {
 
     private Cube floor, backWall, leftWall, rightWall;
 
+    public Dog dog;
+
     public House() {
         floor = new Cube();
 //        floor.scale.x = WALL_LENGTH;
@@ -50,7 +52,7 @@ public class House extends SpatialObject {
 
         Pile pile = getBoxPile(0.1f, floor, backWall, leftWall);
 
-        Dog dog = getDog(0.25f, floor, backWall, leftWall);
+        this.dog = getDog(0.25f, floor, backWall, leftWall);
 
         addChildren(dog);
         addChildren(pile);
