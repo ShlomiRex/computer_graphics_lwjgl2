@@ -288,9 +288,9 @@ public class Main {
     private void render() {
         //To bring everything in front of camera.
         //Also bring camera up so we can see below us.
-        glTranslatef(0, -5f, -20f);
+        glTranslatef(0, 0f, -2f);
 
-        dog.render();
+//        dog.render();
         house.render();
         light0_pointLight.render();
         light1_spotlight.render();
