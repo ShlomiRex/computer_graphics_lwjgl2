@@ -2,7 +2,8 @@ package Scene.Dog;
 
 
 import Engine.EngineObject.SpatialObject;
-import Engine.EngineObject.Sphere;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 public class Dog extends SpatialObject {
 
@@ -10,22 +11,25 @@ public class Dog extends SpatialObject {
     private Body body;
 
     public Dog() {
-        this.name = "Dog";
-        head = new Head();
-        body = new Body();
+        this.setName("Dog");
 
+        Vector4f bodyColor = new Vector4f(0.615f, 0.396f, 0.203f, 1);
+
+        this.setRenderingOrder(RenderingOrder.TRANSLATION_ROTATION_SCALING);
+
+        head = new Head(bodyColor);
+
+        body = new Body(bodyColor);
+        body.setScale(new Vector3f(0.2f, 0.2f, 0.2f));
+        body.setColor(bodyColor);
+        head.setColor(bodyColor);
+
+        head.setScale(new Vector3f(0.2f, 0.2f, 0.2f));
+
+        head.setPosition(new Vector3f(0.f, body.getScale().y + 0.1f, body.getScale().z + 0.1f));
 
         //Render them both
-        children.add(head);
-        children.add(body);
-
-        position.y = 6f;
-
-
-        //Scale entire dog.
-        float s = 3f;
-        scale.x *= s;
-        scale.y *= s;
-        scale.z *= s;
+        addChildren(head);
+        addChildren(body);
     }
 }
