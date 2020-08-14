@@ -72,10 +72,10 @@ public class House extends SpatialObject {
 
     private Dog getDog(float scale, Cube floor, Cube backWall, Cube leftWall) {
         Vector3f vScale = new Vector3f(scale, scale, scale);
-        Vector3f position = new Vector3f(rightWall.position.x - scale * 2.5f, floor.position.y + 0.075f, floor.position.z + floor.getScale().z * 0.75f);
+        Vector3f position = new Vector3f(rightWall.position.x - scale * 2.5f, floor.position.y + 0.08f, floor.position.z + floor.getScale().z * 0.75f);
 
 //        Vector3f position = new Vector3f(0, floor.getPosition().y + scale, 0);
-        Vector3f rotation = new Vector3f(0, -45, 0);
+        Vector3f rotation = new Vector3f(0, -225, 0);
         Dog dog = new Dog();
         dog.setPosition(position);
         dog.setScale(vScale);

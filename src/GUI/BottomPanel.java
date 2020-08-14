@@ -20,6 +20,8 @@ public class BottomPanel extends JPanel {
         instructions.put('Y', "Head right");
         instructions.put('U', "Head up");
         instructions.put('I', "Head down");
+        instructions.put('7', "Tail left");
+        instructions.put('8', "Tail right");
         JButton quit = new JButton("Quit");
         quit.addActionListener(new ActionListener() {
             @Override

@@ -8,6 +8,7 @@ public class Keyboard {
 
     public static Runnable dog_head_rotate_clockwise, dog_head_rotate_cclockwise;
     public static Runnable dog_head_rotate_up, dog_head_rotate_down;
+    public static Runnable tail_clockwise, tail_cclockwise;
     public static Runnable key_h, key_j;
     public static Runnable key_n, key_m;
     public static Runnable key_o, key_p;
@@ -99,6 +100,14 @@ public class Keyboard {
         } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_I)) {
             // Move head down
             dog_head_rotate_down.run();
+        }
+
+        // Move tail clockwise
+        if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_7)) {
+            tail_clockwise.run();
+        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_8)) {
+            // Move tail counter clockwise
+            tail_cclockwise.run();
         }
     }
 }

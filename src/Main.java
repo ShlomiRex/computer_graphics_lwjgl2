@@ -251,6 +251,14 @@ public class Main {
         Keyboard.dog_head_rotate_down = () -> {
             house.dog.update(Dog.DogMovement.HEAD_DOWN.name());
         };
+
+        Keyboard.tail_clockwise = () -> {
+            house.dog.update(Dog.DogMovement.TAIL_LEFT.name());
+        };
+
+        Keyboard.tail_cclockwise = () -> {
+            house.dog.update(Dog.DogMovement.TAIL_RIGHT.name());
+        };
     }
 
     //Exit gracefully.

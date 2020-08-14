@@ -45,7 +45,6 @@ public class Dog extends SpatialObject implements ObjectInput {
         DogMovement dogMovement = DogMovement.valueOf(action);
         if (dogMovement == DogMovement.HEAD_LEFT) {
             if (headRotationY >= -90) {
-
                 this.head.setHeadRotationY(headRotationY - yDiff);
             }
         } else if (dogMovement == DogMovement.HEAD_RIGHT) {
@@ -61,12 +60,26 @@ public class Dog extends SpatialObject implements ObjectInput {
                 this.head.setHeadRotationX(headRotationX - xDiff);
             }
         }
+
+        int tailRotationY = this.body.getTailRotationY();
+        if (dogMovement == DogMovement.TAIL_LEFT) {
+            if (tailRotationY >= -70) {
+                this.body.setTailRotationY(tailRotationY - yDiff);
+            }
+        } else if (dogMovement == DogMovement.TAIL_RIGHT) {
+            if (tailRotationY <= 70) {
+                this.body.setTailRotationY(tailRotationY + yDiff);
+            }
+        }
+
     }
 
     public enum DogMovement {
         HEAD_LEFT,
         HEAD_RIGHT,
         HEAD_UP,
-        HEAD_DOWN
+        HEAD_DOWN,
+        TAIL_LEFT,
+        TAIL_RIGHT
     }
 }

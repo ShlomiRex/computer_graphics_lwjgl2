@@ -2,12 +2,15 @@ package Scene.Dog;
 
 import Engine.EngineObject.SpatialObject;
 import Engine.EngineObject.Sphere;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 public class Body extends SpatialObject {
 
     private Sphere body;
     private Sphere backLeftLeg, backRightLeg, frontLeftLeg, frontRightLeg;
+    public Tail tail;
 
     //We can play with these values.
     private final float LEG_HEIGHT = 0.75f;
@@ -45,6 +48,19 @@ public class Body extends SpatialObject {
         body.addChildren(frontLeftLeg);
         body.addChildren(frontRightLeg);
 
+        tail = new Tail();
+        tail.setPosition(new Vector3f(0, 0, -body.getScale().z * 0.5f));
+//        tail.setRenderingOrder(RenderingOrder.TRANSLATION_ROTATION_SCALING);
+
+        body.addChildren(tail);
+    }
+
+    public int getTailRotationY() {
+        return this.tail.getTailRotationY();
+    }
+
+    public void setTailRotationY(int tailRotationY) {
+        this.tail.setTailRotationY(tailRotationY);
     }
 
     private void frontRight() {
@@ -86,4 +102,5 @@ public class Body extends SpatialObject {
         backLeftLeg.position.y -= LEG_Y_OFFSET;
         backLeftLeg.position.z -= LEG_Z_OFFSET;
     }
+
 }
