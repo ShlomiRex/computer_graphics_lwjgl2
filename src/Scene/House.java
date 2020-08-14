@@ -17,9 +17,6 @@ public class House extends SpatialObject {
     private Cube floor, backWall, leftWall, rightWall;
 
     public House() {
-//        this.setScale(new Vector3f(scale, scale, scale));
-//        this.setPosition(new Vector3f(0, 0, 0));
-
         floor = new Cube();
 //        floor.scale.x = WALL_LENGTH;
         floor.scale.y = WALL_THICKNESS;
@@ -73,7 +70,7 @@ public class House extends SpatialObject {
 
     private Dog getDog(float scale, Cube floor, Cube backWall, Cube leftWall) {
         Vector3f vScale = new Vector3f(scale, scale, scale);
-        Vector3f position = new Vector3f(rightWall.position.x - scale * 2.5f, floor.position.y + scale * 0.4f, floor.position.z + floor.getScale().z * 0.75f);
+        Vector3f position = new Vector3f(rightWall.position.x - scale * 2.5f, floor.position.y + 0.075f, floor.position.z + floor.getScale().z * 0.75f);
 
 //        Vector3f position = new Vector3f(0, floor.getPosition().y + scale, 0);
         Vector3f rotation = new Vector3f(0, -45, 0);
