@@ -31,6 +31,11 @@ public abstract class RawSpatialObject extends BaseSpatialObject implements ISpa
     }
 
     @Override
+    public void renderAfter() {
+
+    }
+
+    @Override
     public void render() {
         GL11.glPushMatrix();
         glDisable(GL_LIGHTING);
@@ -77,6 +82,7 @@ public abstract class RawSpatialObject extends BaseSpatialObject implements ISpa
         }
         GL11.glEnd();
 
+        renderAfter();
         renderChildren();
 
         glClearColor(1, 1, 1, 1);

@@ -3,8 +3,6 @@ package Engine.EngineObject;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import java.util.ArrayList;
-
 public abstract class BaseSpatialObject extends BaseObject {
     public enum RenderingOrder {
         TRANSLATION_ROTATION_SCALING,

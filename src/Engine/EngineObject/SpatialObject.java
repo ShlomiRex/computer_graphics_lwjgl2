@@ -9,6 +9,10 @@ import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 
 public abstract class SpatialObject extends BaseSpatialObject implements ISpatialObject {
+    @Override
+    public void renderAfter() {
+
+    }
 
     @Override
     public void render() {
@@ -37,6 +41,7 @@ public abstract class SpatialObject extends BaseSpatialObject implements ISpatia
                 break;
         }
 
+        renderAfter();
         renderChildren();
 
         glClearColor(1, 1, 1, 1);
