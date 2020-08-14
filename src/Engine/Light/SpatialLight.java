@@ -85,4 +85,9 @@ public class SpatialLight extends Light implements ISpatialObject {
         glColor3f(materialColor_red, materialColor_green, materialColor_blue);
         renderObject.render();
     }
+
+    @Override
+    public void renderAfter() {
+
+    }
 }

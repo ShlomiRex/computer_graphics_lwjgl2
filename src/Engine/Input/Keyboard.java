@@ -7,6 +7,7 @@ public class Keyboard {
     public static Runnable move_forward, move_backward, move_left, move_right, move_up, move_down;
 
     public static Runnable dog_head_rotate_clockwise, dog_head_rotate_cclockwise;
+    public static Runnable dog_head_rotate_up, dog_head_rotate_down;
     public static Runnable key_h, key_j;
     public static Runnable key_n, key_m;
     public static Runnable key_o, key_p;
@@ -82,6 +83,22 @@ public class Keyboard {
             key_o.run();
         } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_P)) {
             key_p.run();
+        }
+
+        // Move head left
+        if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_T)) {
+            dog_head_rotate_clockwise.run();
+        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_Y)) {
+            // Move head right
+            dog_head_rotate_cclockwise.run();
+        }
+
+        // Move head up
+        if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_U)) {
+            dog_head_rotate_up.run();
+        } else if (org.lwjgl.input.Keyboard.isKeyDown(org.lwjgl.input.Keyboard.KEY_I)) {
+            // Move head down
+            dog_head_rotate_down.run();
         }
     }
 }
